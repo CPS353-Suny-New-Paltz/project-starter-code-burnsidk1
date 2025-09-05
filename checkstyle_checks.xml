@@ -23,7 +23,14 @@
     <property name="optional" value="true"/>
   </module>
 
-  <module name="TreeWalker">
+   <module name="TreeWalker">
+    <module name="WhitespaceAfter">
+      <property name="tokens"
+                value="COMMA, SEMI, TYPECAST, LITERAL_IF, LITERAL_ELSE, LITERAL_RETURN,
+                       LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, LITERAL_FINALLY,
+                       LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_CATCH,
+                       LITERAL_CASE"/>
+    </module>
     <module name="OuterTypeFilename"/>
     <module name="IllegalTokenText">
       <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
