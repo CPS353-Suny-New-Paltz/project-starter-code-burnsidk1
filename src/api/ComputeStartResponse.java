@@ -6,7 +6,8 @@ public class ComputeStartResponse {
 	
 	public ComputeStartResponse(ComputeStatusCode code) {
 		// Setter for the status
-		this.code = code; } 
+		this.code = code; 
+		} 
 	
 	public ComputeStatusCode getCode() {
 		// Getter for the status
