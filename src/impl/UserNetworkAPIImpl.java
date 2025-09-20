@@ -1,0 +1,20 @@
+package impl; // Created a new package for the empty implementations
+
+import api.*; // Imports all of the APIs made in Checkpoint 2
+
+public class UserNetworkAPIImpl implements UserNetworkAPI {
+
+    private final DataStorageAPI dataStorageApi;   // Data storage API
+    private final ComputeEngineAPI computeEngineApi; // Compute engine API
+
+    public UserNetworkAPIImpl(DataStorageAPI dataStorageApi, ComputeEngineAPI computeEngineApi) {
+        this.dataStorageApi = dataStorageApi;
+        this.computeEngineApi = computeEngineApi;
+    }
+
+    @Override
+    public UserJobStartResponse submitJob(UserJobStartRequest request) {
+        // Empty implementation for this task
+        return null; // Placeholder for now
+    }
+}
