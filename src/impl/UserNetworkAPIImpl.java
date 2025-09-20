@@ -1,6 +1,11 @@
 package impl; // Created a new package for the empty implementations
 
-import api.*; // Imports all of the APIs made in Checkpoint 2
+import api.ComputeEngineAPI;
+//Import all of the APIs made in Checkpoint 2
+import api.DataStorageAPI;
+import api.UserJobStartRequest;
+import api.UserJobStartResponse;
+import api.UserNetworkAPI;
 
 public class UserNetworkAPIImpl implements UserNetworkAPI {
 
