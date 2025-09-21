@@ -2,8 +2,6 @@ package api;
 
 import project.annotations.ProcessAPI;
 
-import java.util.List;
-
 @ProcessAPI
 public interface DataStorageAPI {
     // Store the results
