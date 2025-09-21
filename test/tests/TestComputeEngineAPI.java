@@ -15,21 +15,26 @@ public class TestComputeEngineAPI {
 
  @Test
  void startCompute_nominal_returnsResponse() {
+     // No mocks needed here
      ComputeEngineAPI api = new ComputeEngineAPIImpl();
-
      ComputeStartRequest req = new ComputeStartRequest();
+     
+     // Starts
      ComputeStartResponse resp = api.startCompute(req);
 
+     // Asserts
      assertNotNull(resp, "Return a response for input");
  }
 
  @Test
  void completeCompute_nominal_returnsResponse() {
      ComputeEngineAPI api = new ComputeEngineAPIImpl();
-
      ComputeCompleteRequest req = new ComputeCompleteRequest();
+     
+     // Starts
      ComputeCompleteResponse resp = api.completeCompute(req);
 
-     assertNotNull(resp, "Smoke: completeCompute should return a response");
+     // Asserts
+     assertNotNull(resp, "ComputeComplete should return a response");
  }
 }
