@@ -1,13 +1,17 @@
 package api;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-public class InputBatch {
+
+public final class InputBatch {
     private final List<Integer> values;
     
-    public InputBatch(List<Integer> values) { 
-    	this.values = values; 
-    	}
+    public InputBatch(List<Integer> values) {
+        this.values = (values == null) ? Collections.emptyList() : new ArrayList<>(values);
+    }
     
     public List<Integer> values() { 
-    	return values; 
-    	}
+    	return Collections.unmodifiableList(values); 
+    }
 }
