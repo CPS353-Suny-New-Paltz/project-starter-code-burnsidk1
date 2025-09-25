@@ -29,12 +29,12 @@ dependencies {
 test {
     useJUnitPlatform()
 
-	//     filter {
-    //     excludeTestsMatching "tests.ComputeEngineIntegrationTest"
-    //     excludeTestsMatching "tests.TestComputeEngineAPI"
-    //     excludeTestsMatching "tests.TestDataStorageAPI"
-    //     excludeTestsMatching "tests.TestUserNetworkAPI"
+	filter {
+    	excludeTestsMatching "tests.ComputeEngineIntegrationTest"
+    	excludeTestsMatching "tests.TestComputeEngineAPI"
+    	excludeTestsMatching "tests.TestDataStorageAPI"
+    	excludeTestsMatching "tests.TestUserNetworkAPI"
 
-    //     setFailOnNoMatchingTests(false)
-    // }
+    	setFailOnNoMatchingTests(false)
+	}
 }
