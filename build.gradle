@@ -29,12 +29,15 @@ dependencies {
 test {
     useJUnitPlatform()
 
-	filter {
-    	excludeTestsMatching "tests.ComputeEngineIntegrationTest"
-    	excludeTestsMatching "tests.TestComputeEngineAPI"
-    	excludeTestsMatching "tests.TestDataStorageAPI"
-    	excludeTestsMatching "tests.TestUserNetworkAPI"
+    filter {
+        excludeTestsMatching "tests.TestUserNetworkAPI.submitJob_withCustomDelimiter_smoke"
+        excludeTestsMatching "tests.TestDataStorageAPI.readInputs_nominal_returnsBatch_for_1_10_25"
+        excludeTestsMatching "tests.TestDataStorageAPI.writeOutputs_nominal_returnsResult"
+        excludeTestsMatching "tests.TestDataStorageAPI.writeResults_wrapper_returnsResponse"
+        excludeTestsMatching "tests.TestComputeEngineAPI.startCompute_nominal_returnsResponse"
+        excludeTestsMatching "tests.TestComputeEngineAPI.completeCompute_nominal_returnsResponse"
+        excludeTestsMatching "tests.ComputeEngineIntegrationTest.integration_1_10_25"
 
-    	setFailOnNoMatchingTests(false)
-	}
+        setFailOnNoMatchingTests(false)
+    }
 }
