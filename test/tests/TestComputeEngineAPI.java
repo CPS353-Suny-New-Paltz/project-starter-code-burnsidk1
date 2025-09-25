@@ -17,24 +17,24 @@ public class TestComputeEngineAPI {
  void startCompute_nominal_returnsResponse() {
      // No mocks needed
      ComputeEngineAPI api = new ComputeEngineAPIImpl();
-     ComputeStartRequest req = new ComputeStartRequest();
+     ComputeStartRequest request = new ComputeStartRequest();
      
      // Starts
-     ComputeStartResponse resp = api.startCompute(req);
+     ComputeStartResponse response = api.startCompute(request);
 
      // Asserts
-     assertNotNull(resp, "Return a response for input");
+     assertNotNull(response, "Return a response for input");
  }
 
  @Test
  void completeCompute_nominal_returnsResponse() {
      ComputeEngineAPI api = new ComputeEngineAPIImpl();
-     ComputeCompleteRequest req = new ComputeCompleteRequest();
+     ComputeCompleteRequest request = new ComputeCompleteRequest();
      
      // Starts
-     ComputeCompleteResponse resp = api.completeCompute(req);
+     ComputeCompleteResponse response = api.completeCompute(request);
 
      // Asserts
-     assertNotNull(resp, "ComputeComplete should return a response");
+     assertNotNull(response, "ComputeComplete should return a response");
  }
 }
