@@ -12,11 +12,12 @@ import api.ComputeStartResponse;
 import api.InputBatch;
 import api.WriteResult;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ComputeEngineIntegrationTest {
 
