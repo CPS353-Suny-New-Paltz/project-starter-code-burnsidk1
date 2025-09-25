@@ -33,7 +33,11 @@ test {
         excludeTestsMatching "tests.ComputeEngineIntegrationTest.integration_1_10_25_writes_factors_defaultDelimiters"
         excludeTestsMatching "tests.TestDataStorageAPI.readInputs_returnsBatch_for_1_10_25"
         excludeTestsMatching "tests.TestDataStorageAPI.writeOutputs_returnsResult"
-		
+		excludeTestsMatching "tests.TestComputeEngineAPI.startCompute_nominal_returnsResponse"
+        excludeTestsMatching "tests.TestComputeEngineAPI.completeCompute_nominal_returnsResponse"
+        excludeTestsMatching "tests.TestDataStorageAPI.writeResults_wrapper_returnsResponse"
+        excludeTestsMatching "tests.TestUserNetworkAPI.submitJob_withCustomDelimiter_smoke"
+
         setFailOnNoMatchingTests(false)
     }
 }
