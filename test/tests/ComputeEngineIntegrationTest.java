@@ -22,10 +22,6 @@ import java.util.List;
 
 public class ComputeEngineIntegrationTest {
 	
-    @Test
-    void placeholder_smoke() {
-        assertTrue(true);
-    }
 
   @Test
   void integration_1_10_25() {
