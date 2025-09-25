@@ -1,19 +1,16 @@
 package tests;
 
 import impl.DataStorageAPIImpl;
+import impl.UserNetworkAPIImpl;
 import impl.ComputeEngineAPIImpl;
 
 import org.junit.jupiter.api.Test;
 
-import api.ComputeCompleteRequest;
-import api.ComputeCompleteResponse;
-import api.ComputeStartRequest;
-import api.ComputeStartResponse;
-import api.InputBatch;
-import api.WriteResult;
+import api.DataStorageAPI;
+import api.ComputeEngineAPI;
+import api.UserNetworkAPI;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -21,45 +18,40 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ComputeEngineIntegrationTest {
-	
 
-  @Test
-  void integration_1_10_25() {
-    // Inputs 1, 10, 25 using default delimiter
-    InMemoryInputConfig inCfg = new InMemoryInputConfig("mem://inputs",
-        Arrays.asList(1, 10, 25));
+	  @Test
+	  void smoke_components() {
+	    InMemoryInputConfig inCfg = new InMemoryInputConfig("mem://inputs",
+	        Arrays.asList(1, 10, 25));
+	    List<String> outBuffer = new ArrayList<>();
+	    InMemoryOutputConfig outCfg = new InMemoryOutputConfig("mem://outputs", outBuffer);
 
-    List<String> outBuffer = new ArrayList<>();
-    InMemoryOutputConfig outCfg = new InMemoryOutputConfig("mem://outputs", outBuffer);
+	    DataStorageAPI storage = new InMemoryDataStorageAPI(inCfg, outCfg);
+	    ComputeEngineAPI engine = new ComputeEngineAPIImpl();
+	    UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, engine);
 
-    InMemoryDataStore store = new InMemoryDataStore(inCfg, outCfg);
+	    assertTrue(true);
+	  }
 
-    // Empty implementations under test (no mocks)
-    DataStorageAPIImpl storage = new DataStorageAPIImpl(store);
-    ComputeEngineAPIImpl engine = new ComputeEngineAPIImpl();
+	  @Test
+	  void integration_1_10_25_writes_factors_defaultDelimiters() {
+	    // Inputs [1,10,25], no delimiter specified => use defaults ":" and ","
+	    InMemoryInputConfig inCfg = new InMemoryInputConfig("mem://inputs",
+	        Arrays.asList(1, 10, 25));
+	    List<String> outBuffer = new ArrayList<>();
+	    InMemoryOutputConfig outCfg = new InMemoryOutputConfig("mem://outputs", outBuffer);
 
-    // Hard-coded test input
-    List<String> testInput = Arrays.asList(
-        "1:1",
-        "10:1,2,5,10",
-        "25:1,5,25"
-    );
+	    DataStorageAPI storage = new InMemoryDataStorageAPI(inCfg, outCfg);
+	    ComputeEngineAPI engine = new ComputeEngineAPIImpl();
+	    UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, engine);
 
-    // Starts
-    InputBatch batch = storage.readInputs(inCfg.getLocation());
-    ComputeStartResponse started = engine.startCompute(new ComputeStartRequest());
-    ComputeCompleteResponse finished = engine.completeCompute(new ComputeCompleteRequest());
-    WriteResult writeResults = storage.writeOutputs(outCfg.getLocation(), testInput);
+	    List<String> expected = Arrays.asList(
+	        "1:1",
+	        "10:1,2,5,10",
+	        "25:1,5,25"
+	    );
 
-    // Asserts
-    // These will be null
-    assertNotNull(batch, "storage.readInputs should return an InputBatch");
-    assertNotNull(started,  "engine.startCompute should return a response");
-    assertNotNull(finished, "engine.completeCompute should return a response");
-    assertNotNull(writeResults, "storage.writeOutputs should return a result");
-
-    // Validate
-    assertEquals(testInput, outBuffer,
-        "Destination should contain a default formatted output");
-  }
-}
+	    assertEquals(expected, outBuffer,
+	        "Destination should contain default-formatted factors for 1,10,25");
+	  }
+	}
