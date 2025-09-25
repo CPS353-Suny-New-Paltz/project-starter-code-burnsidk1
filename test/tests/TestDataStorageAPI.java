@@ -61,12 +61,12 @@ public class TestDataStorageAPI {
         // Set up mocks for DataStore
         DataStore ds = Mockito.mock(DataStore.class);
         DataStorageAPI api = new DataStorageAPIImpl(ds);
-        StorageWriteRequest req = Mockito.mock(StorageWriteRequest.class);
+        StorageWriteRequest request = Mockito.mock(StorageWriteRequest.class);
 
         // Write response
-        StorageWriteResponse resp = api.writeResults(req);
+        StorageWriteResponse response = api.writeResults(request);
 
         // Assert
-        assertNotNull(resp, "Should return a response");
+        assertNotNull(response, "Should return a response");
     }
 }

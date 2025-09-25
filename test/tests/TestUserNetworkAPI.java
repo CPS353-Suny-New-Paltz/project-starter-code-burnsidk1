@@ -23,20 +23,20 @@ public class TestUserNetworkAPI {
         UserNetworkAPI api = new UserNetworkAPIImpl(storage, compute);
 
         // Makes a request using the custom delimiter
-        UserJobStartRequest req = new UserJobStartRequest(";");
+        UserJobStartRequest request = new UserJobStartRequest(";");
        
         // Starts
-        UserJobStartResponse resp = api.submitJob(req);
+        UserJobStartResponse response = api.submitJob(request);
 
         // Assert
-        assertNotNull(resp, "Smoke: submitJob returns response");
+        assertNotNull(response, "Smoke: submitJob returns response");
     }
 
     @Test
     void request_defaultDelimiter_isComma() {
-        UserJobStartRequest req = new UserJobStartRequest();
+        UserJobStartRequest request = new UserJobStartRequest();
         
         // Assert for the delimiter
-        assertEquals(",", req.getDelimiter());
+        assertEquals(",", request.getDelimiter());
     }
 }
