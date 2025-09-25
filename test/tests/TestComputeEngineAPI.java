@@ -14,11 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestComputeEngineAPI {
 	
-    @Test
-    void placeholder_smoke() {
-        assertTrue(true);
-    }
-
  @Test
  void startCompute_nominal_returnsResponse() {
      // No mocks needed
