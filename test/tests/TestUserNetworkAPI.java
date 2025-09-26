@@ -2,7 +2,6 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,11 +14,6 @@ import api.UserNetworkAPI;
 import impl.UserNetworkAPIImpl;
 
 public class TestUserNetworkAPI {
-	
-    @Test
-    void placeholder_smoke() {
-        assertTrue(true);
-    }
 	
     @Test
     void submitJob_withCustomDelimiter_smoke() {

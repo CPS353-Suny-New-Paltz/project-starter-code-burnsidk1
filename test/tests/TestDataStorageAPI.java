@@ -15,18 +15,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 public class TestDataStorageAPI {
-	
-    @Test
-    void placeholder_smoke() {
-        assertTrue(true);
-    }
 
 	// List of integers based on the input example provided in the assignment
     private static final List<Integer> INPUTS = Arrays.asList(1, 10, 25);
