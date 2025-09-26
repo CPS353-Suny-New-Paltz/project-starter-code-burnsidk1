@@ -13,13 +13,19 @@ import java.util.List;
 
 public class InMemoryDataStorageAPI implements DataStorageAPI {
 	
-	  private final InMemoryInputConfig inCfg;
-	  private final InMemoryOutputConfig outCfg;
+	  private InMemoryInputConfig inCfg;
+	  private InMemoryOutputConfig outCfg;
 
-	  public InMemoryDataStorageAPI(InMemoryInputConfig inCfg, InMemoryOutputConfig outCfg) {
-	    this.inCfg = inCfg;
-	    this.outCfg = outCfg;
+	  // Empty constructor for test
+	  public InMemoryDataStorageAPI() {
+		  
 	  }
+	  
+	  public InMemoryDataStorageAPI withConfigs(InMemoryInputConfig inCfg, InMemoryOutputConfig outCfg) {
+		    this.inCfg = inCfg;
+		    this.outCfg = outCfg;
+		    return this;
+		  }
 
 	  @Override
 	  public InputBatch readInputs(String inputLocation) {
@@ -40,5 +46,10 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 	  @Override
 	  public StorageWriteResponse writeResults(StorageWriteRequest request) {
 		return null;
+	  }
+	  
+	  @Test
+	  void placeholder_smoke() {
+		  
 	  }
 	}
