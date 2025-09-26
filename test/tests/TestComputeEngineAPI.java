@@ -9,7 +9,7 @@ import api.ComputeStartRequest;
 import api.ComputeStartResponse;
 import impl.ComputeEngineAPIImpl;
 
-// import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestComputeEngineAPI {
 
