@@ -1,10 +1,6 @@
 package impl;
 
-import api.ComputeCompleteRequest;
-import api.ComputeCompleteResponse;
-import api.ComputeEngineAPI;
-import api.ComputeStartRequest;
-import api.ComputeStartResponse;
+import api.*;
 
 public class ComputeEngineAPIImpl implements ComputeEngineAPI {
 
