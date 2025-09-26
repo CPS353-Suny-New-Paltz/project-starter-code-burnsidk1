@@ -12,16 +12,12 @@ import api.WriteResult;
 public class DataStorageAPIImpl implements DataStorageAPI {
 
     private final DataStore dataStore; 
-    
-    public DataStorageAPIImpl() { 
-    	this.dataStore = null; 
-    	}
 
     public DataStorageAPIImpl(DataStore dataStore) {
         this.dataStore = dataStore;
     }
 
-	@Override
+    @Override
     public InputBatch readInputs(String inputLocation) {
         return null;
     }
