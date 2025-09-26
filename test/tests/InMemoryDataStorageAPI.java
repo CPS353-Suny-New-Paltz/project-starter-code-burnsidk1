@@ -6,13 +6,10 @@ import api.StorageWriteRequest;
 import api.StorageWriteResponse;
 import api.WriteResult;
 
-import org.junit.jupiter.api.Test; 
-
 import java.util.Collections;
 import java.util.List;
 
 public class InMemoryDataStorageAPI implements DataStorageAPI {
-	
 	  private final InMemoryInputConfig inCfg;
 	  private final InMemoryOutputConfig outCfg;
 
@@ -41,9 +38,4 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 	  public StorageWriteResponse writeResults(StorageWriteRequest request) {
 		return null;
 	  }
-	  
-	  @Test
-	  void placeholder_smoke() {
-		  
-	  }
-	}
+}
