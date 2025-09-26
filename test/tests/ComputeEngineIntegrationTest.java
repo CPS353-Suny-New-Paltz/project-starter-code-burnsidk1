@@ -11,7 +11,6 @@ import api.ComputeEngineAPI;
 import api.UserNetworkAPI;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,28 +19,14 @@ import java.util.List;
 public class ComputeEngineIntegrationTest {
 
 	  @Test
-	  void smoke_components() {
-	    InMemoryInputConfig inCfg = new InMemoryInputConfig("mem://inputs",
-	        Arrays.asList(1, 10, 25));
-	    List<String> outBuffer = new ArrayList<>();
-	    InMemoryOutputConfig outCfg = new InMemoryOutputConfig("mem://outputs", outBuffer);
-
-	    DataStorageAPI storage = new InMemoryDataStorageAPI(inCfg, outCfg);
-	    ComputeEngineAPI engine = new ComputeEngineAPIImpl();
-	    UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, engine);
-
-	    assertTrue(true);
-	  }
-
-	  @Test
 	  void integration_1_10_25_writes_factors_defaultDelimiters() {
-	    // Inputs [1,10,25], no delimiter specified => use defaults ":" and ","
+	    // Inputs [1,10,25], no delimiter specified
 	    InMemoryInputConfig inCfg = new InMemoryInputConfig("mem://inputs",
 	        Arrays.asList(1, 10, 25));
 	    List<String> outBuffer = new ArrayList<>();
 	    InMemoryOutputConfig outCfg = new InMemoryOutputConfig("mem://outputs", outBuffer);
 
-	    DataStorageAPI storage = new InMemoryDataStorageAPI(inCfg, outCfg);
+	    DataStorageAPI storage = new InMemoryDataStorageAPI().withConfigs(inCfg, outCfg);
 	    ComputeEngineAPI engine = new ComputeEngineAPIImpl();
 	    UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, engine);
 
