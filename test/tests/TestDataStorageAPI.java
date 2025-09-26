@@ -12,13 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+// import static org.junit.jupiter.api.Assertions.*;
+// import static org.mockito.Mockito.*;
 
 public class TestDataStorageAPI {
 
@@ -28,7 +23,7 @@ public class TestDataStorageAPI {
     @Test
     void readInputs_nominal_returnsBatch_for_1_10_25() {
         // Set up mocks for DataStore
-        DataStore ds = Mockito.mock(DataStore.class);
+        DataStore ds = mock(DataStore.class);
         when(ds.readIntegers(anyString())).thenReturn(INPUTS); // Accepts any location
         DataStorageAPI api = new DataStorageAPIImpl(ds);
 
@@ -42,7 +37,7 @@ public class TestDataStorageAPI {
     @Test
     void writeOutputs_nominal_returnsResult() {
         // Set up mocks for DataStore
-        DataStore ds = Mockito.mock(DataStore.class);
+        DataStore ds = mock(DataStore.class);
         when(ds.writeLines(eq("output file name"), any())).thenReturn(true);
         DataStorageAPI api = new DataStorageAPIImpl(ds);
 
@@ -59,9 +54,9 @@ public class TestDataStorageAPI {
     @Test
     void writeResults_wrapper_returnsResponse() {
         // Set up mocks for DataStore
-        DataStore ds = Mockito.mock(DataStore.class);
+        DataStore ds = mock(DataStore.class);
         DataStorageAPI api = new DataStorageAPIImpl(ds);
-        StorageWriteRequest req = Mockito.mock(StorageWriteRequest.class);
+        StorageWriteRequest req = mock(StorageWriteRequest.class);
 
         // Write response
         StorageWriteResponse resp = api.writeResults(req);

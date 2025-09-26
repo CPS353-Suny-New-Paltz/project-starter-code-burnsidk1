@@ -9,13 +9,13 @@ import api.ComputeStartRequest;
 import api.ComputeStartResponse;
 import impl.ComputeEngineAPIImpl;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+// import static org.junit.jupiter.api.Assertions.*;
 
 public class TestComputeEngineAPI {
 
  @Test
  void startCompute_nominal_returnsResponse() {
-     // No mocks needed
+     // No mocks needed here
      ComputeEngineAPI api = new ComputeEngineAPIImpl();
      ComputeStartRequest req = new ComputeStartRequest();
      
