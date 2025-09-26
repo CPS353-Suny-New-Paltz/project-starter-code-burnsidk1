@@ -17,6 +17,11 @@ import impl.UserNetworkAPIImpl;
 public class TestUserNetworkAPI {
 	
     @Test
+    void placeholder_smoke() {
+        assertTrue(true);
+    }
+	
+    @Test
     void submitJob_withCustomDelimiter_smoke() {
     	// Creates the mocks needed for the test
         DataStorageAPI storage = Mockito.mock(DataStorageAPI.class);
