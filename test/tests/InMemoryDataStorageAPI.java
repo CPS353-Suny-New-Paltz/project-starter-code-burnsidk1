@@ -41,4 +41,9 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 	  public StorageWriteResponse writeResults(StorageWriteRequest request) {
 		return null;
 	  }
+	  
+	  @Test
+	  void placeholder_smoke() {
+		  
+	  }
 	}
