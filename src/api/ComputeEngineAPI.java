@@ -8,5 +8,5 @@ public interface ComputeEngineAPI {
 	ComputeStartResponse startCompute(ComputeStartRequest request); 
 	
 	// 2) Complete the computation 
-	ComputeCompleteResponse completeCompute(ComputeCompleteRequest request);
+	ComputeCompleteResponse completeCompute(ComputeCompleteRequest request); 
 }
