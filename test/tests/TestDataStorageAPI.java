@@ -26,7 +26,7 @@ public class TestDataStorageAPI {
     private static final List<Integer> INPUTS = Arrays.asList(1, 10, 25);
 
     @Test
-    void readInputs_returnsBatch_for_1_10_25() {
+    void readInputs_nominal_returnsBatch_for_1_10_25() {
         // Set up mocks for DataStore
         DataStore ds = Mockito.mock(DataStore.class);
         when(ds.readIntegers(anyString())).thenReturn(INPUTS); // Accepts any location
@@ -40,7 +40,7 @@ public class TestDataStorageAPI {
     }
 
     @Test
-    void writeOutputs_returnsResult() {
+    void writeOutputs_nominal_returnsResult() {
         // Set up mocks for DataStore
         DataStore ds = Mockito.mock(DataStore.class);
         when(ds.writeLines(eq("output file name"), any())).thenReturn(true);
