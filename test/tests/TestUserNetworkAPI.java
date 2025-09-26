@@ -2,9 +2,9 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import api.ComputeEngineAPI;
 import api.DataStorageAPI;
@@ -18,8 +18,8 @@ public class TestUserNetworkAPI {
     @Test
     void submitJob_withCustomDelimiter_smoke() {
     	// Creates the mocks needed for the test
-        DataStorageAPI storage = Mockito.mock(DataStorageAPI.class);
-        ComputeEngineAPI compute = Mockito.mock(ComputeEngineAPI.class);
+        DataStorageAPI storage = mock(DataStorageAPI.class);
+        ComputeEngineAPI compute = mock(ComputeEngineAPI.class);
         UserNetworkAPI api = new UserNetworkAPIImpl(storage, compute);
 
         // Makes a request using the custom delimiter
