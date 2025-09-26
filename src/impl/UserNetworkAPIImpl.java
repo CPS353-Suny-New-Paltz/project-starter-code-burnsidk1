@@ -9,10 +9,9 @@ import api.UserNetworkAPI;
 
 public class UserNetworkAPIImpl implements UserNetworkAPI {
 
-    private final DataStorageAPI dataStorageApi;   // Used to read inputs and write outputs
-    private final ComputeEngineAPI computeEngineApi; // Used to run the computation
+    private final DataStorageAPI dataStorageApi;   // Data storage API
+    private final ComputeEngineAPI computeEngineApi; // Compute engine API
 
-    // Dependencies
     public UserNetworkAPIImpl(DataStorageAPI dataStorageApi, ComputeEngineAPI computeEngineApi) {
         this.dataStorageApi = dataStorageApi;
         this.computeEngineApi = computeEngineApi;
