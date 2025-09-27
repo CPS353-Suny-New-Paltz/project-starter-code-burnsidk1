@@ -10,9 +10,10 @@ import api.ComputeStartResponse;
 import impl.ComputeEngineAPIImpl;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestComputeEngineAPI {
-
+	
  @Test
  void startCompute_nominal_returnsResponse() {
      // No mocks needed
