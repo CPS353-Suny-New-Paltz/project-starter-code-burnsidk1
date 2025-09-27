@@ -53,7 +53,9 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
             List<Integer> seq = collatzSequence(initialNum);
         StringBuilder sb = new StringBuilder(seq.size() * 2);
         for (int i = 0; i < seq.size(); i++) {
-            if (i > 0) sb.append(',');
+            if (i > 0) {
+                sb.append(',');
+            }
             sb.append(seq.get(i));
         }
         return sb.toString();
