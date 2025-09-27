@@ -46,21 +46,21 @@ public class ComputeEngineIntegrationTest {
         "25:1,5,25"
     );
 
-    // Starts
-    InputBatch batch = storage.readInputs(inCfg.getLocation());
-    ComputeStartResponse started = engine.startCompute(new ComputeStartRequest());
-    ComputeCompleteResponse finished = engine.completeCompute(new ComputeCompleteRequest());
-    WriteResult writeResults = storage.writeOutputs(outCfg.getLocation(), testInput);
+  // Starts
+  // Read integers from the input location
+  List<Integer> inputValues = store.readIntegers(inCfg.getLocation());
+  ComputeStartResponse started = engine.startCompute(new ComputeStartRequest());
+  ComputeCompleteResponse finished = engine.completeCompute(new ComputeCompleteRequest());
+  boolean writeSuccess = store.writeLines(outCfg.getLocation(), testInput);
 
-    // Asserts
-    // These will be null
-    assertNotNull(batch, "storage.readInputs should return an InputBatch");
-    assertNotNull(started,  "engine.startCompute should return a response");
-    assertNotNull(finished, "engine.completeCompute should return a response");
-    assertNotNull(writeResults, "storage.writeOutputs should return a result");
+  // Asserts
+  assertNotNull(inputValues, "store.readIntegers should return a list of integers");
+  assertNotNull(started,  "engine.startCompute should return a response");
+  assertNotNull(finished, "engine.completeCompute should return a response");
+  assertEquals(true, writeSuccess, "store.writeLines should return true");
 
-    // Validate
-    assertEquals(testInput, outBuffer,
-        "Destination should contain a default formatted output");
+  // Validate
+  assertEquals(testInput, outBuffer,
+    "Destination should contain a default formatted output");
   }
 }
