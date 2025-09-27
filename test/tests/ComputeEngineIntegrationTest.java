@@ -33,8 +33,8 @@ public class ComputeEngineIntegrationTest {
     InMemoryDataStore store = new InMemoryDataStore(inCfg, outCfg);
 
     // Empty implementations under test (no mocks)
-    DataStorageAPIImpl storage = new DataStorageAPIImpl(store);
-    ComputeEngineAPIImpl engine = new ComputeEngineAPIImpl();
+  DataStorageAPI storage = new DataStorageAPIImpl(store);
+  ComputeEngineAPI engine = new ComputeEngineAPIImpl();
 
     // Hard-coded test input
     List<String> testInput = Arrays.asList(
