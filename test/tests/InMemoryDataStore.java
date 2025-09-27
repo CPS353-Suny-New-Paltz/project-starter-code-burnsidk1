@@ -1,6 +1,5 @@
 package tests;
 
-import api.DataStorageAPI;
 import api.DataStore;
 import java.util.Collections;
 import java.util.List;
@@ -36,9 +35,5 @@ public class InMemoryDataStore implements DataStore {
       destination.addAll(lines);
     }
     return true; // Always succeeds, for the sake of the test
-  }
-
-  public DataStorageAPI withConfigs(InMemoryInputConfig inCfg, InMemoryOutputConfig outCfg) {
-	return null;
   }
 }
