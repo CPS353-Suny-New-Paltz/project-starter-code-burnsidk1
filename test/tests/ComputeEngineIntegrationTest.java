@@ -24,43 +24,42 @@ import java.util.List;
 
 public class ComputeEngineIntegrationTest {
 
+  // smoke test
   @Test
-  void integration_1_10_25() {
-    // Inputs 1, 10, 25 using default delimiter
+  void smoke_components() {
     InMemoryInputConfig inCfg = new InMemoryInputConfig("mem://inputs",
         Arrays.asList(1, 10, 25));
-
     List<String> outBuffer = new ArrayList<>();
     InMemoryOutputConfig outCfg = new InMemoryOutputConfig("mem://outputs", outBuffer);
 
-    InMemoryDataStore store = new InMemoryDataStore(inCfg, outCfg);
+    DataStorageAPI storage = new InMemoryDataStorageAPI().withConfigs(inCfg, outCfg);
 
-    // Empty implementations under test (no mocks)
-  DataStorageAPI storage = new DataStorageAPIImpl(store);
-  ComputeEngineAPI engine = new ComputeEngineAPIImpl();
+    ComputeEngineAPI engine = new ComputeEngineAPIImpl();
+    UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, engine);
 
-    // Hard-coded test input
-    List<String> testInput = Arrays.asList(
+    assertTrue(true);
+  }
+
+  // Tests will fail
+  @Test
+  void integration_1_10_25_writes_factors_defaultDelimiters() {
+    InMemoryInputConfig inCfg = new InMemoryInputConfig("mem://inputs",
+        Arrays.asList(1, 10, 25));
+    List<String> outBuffer = new ArrayList<>();
+    InMemoryOutputConfig outCfg = new InMemoryOutputConfig("mem://outputs", outBuffer);
+
+    DataStorageAPI storage = new InMemoryDataStorageAPI().withConfigs(inCfg, outCfg);
+    ComputeEngineAPI engine = new ComputeEngineAPIImpl();
+    UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, engine);
+
+    List<String> expected = Arrays.asList(
         "1:1",
         "10:1,2,5,10",
         "25:1,5,25"
     );
 
-  // Starts
-  // Read integers from the input location
-  List<Integer> inputValues = store.readIntegers(inCfg.getLocation());
-  ComputeStartResponse started = engine.startCompute(new ComputeStartRequest());
-  ComputeCompleteResponse finished = engine.completeCompute(new ComputeCompleteRequest());
-  boolean writeSuccess = store.writeLines(outCfg.getLocation(), testInput);
-
-  // Asserts
-  assertNotNull(inputValues, "store.readIntegers should return a list of integers");
-  assertNotNull(started,  "engine.startCompute should return a response");
-  assertNotNull(finished, "engine.completeCompute should return a response");
-  assertEquals(true, writeSuccess, "store.writeLines should return true");
-
-  // Validate
-  assertEquals(testInput, outBuffer,
-    "Destination should contain a default formatted output");
+    // Validation
+    assertEquals(expected, outBuffer,
+        "Destination should contain default-formatted factors for 1,10,25");
   }
 }
