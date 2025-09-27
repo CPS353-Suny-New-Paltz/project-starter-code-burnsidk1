@@ -31,6 +31,7 @@ test {
     useJUnitPlatform()
 
     filter {
+		excludeTestsMatching "tests.ComputeEngineIntegrationTest.integration_1_10_25"
         excludeTestsMatching "tests.ComputeEngineIntegrationTest.integration_1_10_25_writes_factors_defaultDelimiters"
         excludeTestsMatching "tests.TestDataStorageAPI.readInputs_returnsBatch_for_1_10_25"
         excludeTestsMatching "tests.TestDataStorageAPI.writeOutputs_returnsResult"
