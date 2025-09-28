@@ -24,7 +24,7 @@ public class TestUserNetworkAPI {
         UserNetworkAPI api = new UserNetworkAPIImpl(storage, compute);
 
         // Makes a request using the custom delimiter
-        UserJobStartRequest request = new UserJobStartRequest(";");
+        UserJobStartRequest request = new UserJobStartRequest(null, null, ";");
        
         // Starts
         UserJobStartResponse response = api.submitJob(request);
