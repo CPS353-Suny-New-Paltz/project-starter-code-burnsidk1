@@ -1,15 +1,24 @@
 package api;
 
-public class StorageWriteRequest {
-    private final OutputType destination;
+import java.util.List;
 
-    public StorageWriteRequest(OutputType destination) {
-    	// Setter for the output destination
+public class StorageWriteRequest {
+    private final OutputConfig destination;
+    private final List<String> formattedPairs;
+
+    // Setter for the output location and formatted pairs
+    public StorageWriteRequest(OutputConfig destination, List<String> formattedPairs) {
         this.destination = destination;
+        this.formattedPairs = formattedPairs;
     }
 
-    public OutputType getDestination() {
-    	// Getter for the output destination
+    // Getter for the output destination
+    public OutputConfig getDestination() {
         return destination;
+    }
+
+    // Getter for the formatted pairs
+    public List<String> getFormattedPairs() {
+        return formattedPairs;
     }
 }

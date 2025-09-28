@@ -5,6 +5,7 @@ import java.util.List;
 import api.DataStorageAPI;
 import api.DataStore;
 import api.InputBatch;
+import api.OutputConfig;
 import api.StorageWriteRequest;
 import api.StorageWriteResponse;
 import api.WriteResult;
@@ -25,18 +26,76 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     // Read integers from a user-defined location
 	@Override
     public InputBatch readInputs(String inputLocation) {
-        return null; // Returns null for now
+        // If the input location is null, returns null
+        if (inputLocation == null) {
+            return null;
+        }
+        java.util.List<Integer> values = new java.util.ArrayList<>();
+        // Try statement for reading in the values from a file
+        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(inputLocation))) {
+            
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Trim removes any unwanted whitespace
+                line = line.trim();
+                if (!line.isEmpty()) {
+                    try {
+                        // Parses the integers and add to the list
+                        values.add(Integer.parseInt(line));
+                        // If parsing fails, catch the exception
+                    } catch (NumberFormatException e) {
+                        // Skips lines that are not valid
+                    }
+                }
+            }
+            // Catches IOException if the file cannot be read
+        } catch (java.io.IOException e) {
+            return null;
+        }
+        // Returns the list of integers
+        return new api.InputBatch(values);
     }
 
-	// Write outputs to destination
+	// Writes outputs to destination
     @Override
     public WriteResult writeOutputs(String outputLocation, List<String> formattedPairs) {
-        return null; // Returns null for now
+        if (outputLocation == null || formattedPairs == null) {
+             // If the output location or formatted pairs are null, returns false
+            return new api.WriteResult(false, "Output location or formatted pairs is null");
+        }
+        // Try statement for writing the values to a file
+        try (java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.FileWriter(outputLocation))) {
+            for (String line : formattedPairs) {
+                writer.write(line);
+                writer.newLine();
+            }
+            // Catches IOException if the file cannot be written to
+        } catch (java.io.IOException e) {
+            return new api.WriteResult(false, "IOException: " + e.getMessage());
+        }
+        // If successful, returns true
+        return new api.WriteResult(true, "Write successful");
     }
 
     // Wrapper for the request/response
     @Override
     public StorageWriteResponse writeResults(StorageWriteRequest request) {
-        return null; // Returns null for now
+        if (request == null) {
+            // If the request is null, returns INVALID_REQUEST
+            return new api.StorageWriteResponse(api.StorageStatusCode.INVALID_REQUEST);
+        }
+        // Writes the outputs using the request data
+        String outputLocation = null;
+        if (request.getDestination() != null) {
+            outputLocation = request.getDestination().getLocation();
+        }
+        api.WriteResult result = writeOutputs(outputLocation, request.getFormattedPairs());
+        if (result != null && result.success()) {
+            // If result is not null and successful, returns SUCCESS
+            return new api.StorageWriteResponse(api.StorageStatusCode.SUCCESS);
+        } else {
+            // If result is null or unsuccessful, returns STORAGE_UNAVAILABLE
+            return new api.StorageWriteResponse(api.StorageStatusCode.STORAGE_UNAVAILABLE);
+        }
     }
 }
