@@ -23,13 +23,19 @@ public class ComputeEngineIntegrationTest {
 	    // Inputs [1,10,25], no delimiter specified
 	    InMemoryInputConfig inCfg = new InMemoryInputConfig("mem://inputs",
 	        Arrays.asList(1, 10, 25));
+			// Output buffer to capture results
 	    List<String> outBuffer = new ArrayList<>();
+		// Output configuration with the buffer
 	    InMemoryOutputConfig outCfg = new InMemoryOutputConfig("mem://outputs", outBuffer);
 
+		// DataStorageAPI with in and out configs
 	    DataStorageAPI storage = new InMemoryDataStorageAPI().withConfigs(inCfg, outCfg);
 	    ComputeEngineAPI engine = new ComputeEngineAPIImpl();
+
+		// UserNetworkAPI with storage and compute engine
 	    UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, engine);
 
+		// Expected formatted results
 		List<String> expected = Arrays.asList(
 			"1:1",
 			"10:10,5,16,8,4,2,1",
@@ -39,6 +45,7 @@ public class ComputeEngineIntegrationTest {
 		// Trigger the computation and output
 		userApi.submitJob(new api.UserJobStartRequest(null, "mem://inputs", "mem://outputs"));
 
+		// Assert the output buffer matches expected results
 		assertEquals(expected, outBuffer,
 			"Destination should contain default-formatted Collatz sequences for 1,10,25");
 	  }

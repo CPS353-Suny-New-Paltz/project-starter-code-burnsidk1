@@ -18,6 +18,7 @@ public class InMemoryOutputConfig implements OutputConfig {
     	return location; 
     	}
     
+    //  Getter for the destination
     public List<String> getDestination() { 
     	return destination; 
     	} // test-only

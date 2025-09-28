@@ -6,7 +6,7 @@ public enum ComputeStatusCode {
 	// If the request is invalid the computation won't work
 	INVALID_REQUEST(false), 
 	// If for some reason the computation fails, 
-	//the code will be false for completion
+	// the code will be false for completion
 	COMPUTE_FAILED(false); 
 	
 	// Private boolean because of enum

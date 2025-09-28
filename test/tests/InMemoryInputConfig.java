@@ -19,6 +19,7 @@ public class InMemoryInputConfig implements InputConfig {
     	return location; 
     }
     
+    // Getter for the values
     public List<Integer> getValues() { 
     	// test only
     	return values; 

@@ -13,6 +13,7 @@ import java.util.List;
 
 public class InMemoryDataStorageAPI implements DataStorageAPI {
 	
+	// In and out configs
 	  private InMemoryInputConfig inCfg;
 	  private InMemoryOutputConfig outCfg;
 
@@ -21,6 +22,7 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 		  
 	  }
 	  
+	  // Setter for the in and out configs
 	  public InMemoryDataStorageAPI withConfigs(InMemoryInputConfig inCfg, InMemoryOutputConfig outCfg) {
 		    this.inCfg = inCfg;
 		    this.outCfg = outCfg;
@@ -28,15 +30,20 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 		  }
 
 	  @Override
+	  // Reads inputs from the in-memory config
 	  public InputBatch readInputs(String inputLocation) {
 	    if (inCfg != null && inCfg.getLocation().equals(inputLocation)) {
+			// If the input location matches, reads the values
 	      return new InputBatch(inCfg.getValues());
 	    }
+		// If the input location is null or does not match, returns empty list
 	    return new InputBatch(Collections.emptyList());
 	  }
 
 	  @Override
+	  // Writes outputs to the in-memory config
 	  public WriteResult writeOutputs(String outputLocation, List<String> formattedPairs) {
+		// If the output location matches and formatted pairs are not null, writes to the destination
 	    if (outCfg != null && outCfg.getLocation().equals(outputLocation) && formattedPairs != null) {
 	      outCfg.getDestination().addAll(formattedPairs);
 		// If the output location or formatted pairs are null, returns false
@@ -47,7 +54,9 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 	}
 
 	  @Override
+	  // Handles write requests
 	public StorageWriteResponse writeResults(StorageWriteRequest request) {
+		// If the request, destination, and formatted pairs are not null,then writes
 		if (request != null && request.getDestination() != null && request.getFormattedPairs() != null) {
 			writeOutputs(request.getDestination().getLocation(), request.getFormattedPairs());
 			// If successful, returns SUCCESS
