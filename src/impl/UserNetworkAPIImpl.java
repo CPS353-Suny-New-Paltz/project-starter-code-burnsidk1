@@ -17,12 +17,14 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
     private final ComputeEngineAPI computeEngineApi; // Used to run the computation
 
     public UserNetworkAPIImpl() {
+        // No argument constructor for the smoke test
         this.dataStorageApi = null;
         this.computeEngineApi = null;
     }
     
     // Dependencies
     public UserNetworkAPIImpl(DataStorageAPI dataStorageApi, ComputeEngineAPI computeEngineApi) {
+        // Storage and Compute dependencies
         this.dataStorageApi = dataStorageApi;
         this.computeEngineApi = computeEngineApi;
     }
@@ -38,23 +40,29 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
         String inputLoc = request.getInputLocation();   // Reads the input location
         InputBatch batch = dataStorageApi.readInputs(inputLoc); // Reads the batch of inputs (string)
 
+        // Formats the output as a list of strings
         List<String> formattedPairs = new ArrayList<>();
         if (batch != null) {
+            // For each integer in the batch, gets the Collatz sequence as a string
             for (Integer n : batch.values()) {
                 if (n == null || n <= 0) {
+                    // Skip invalid inputs
                 	continue;
                 }
 
                 String sequence;
+                // Use the ComputeEngineAPIImpl to get the Collatz sequence string
                 if (computeEngineApi instanceof ComputeEngineAPIImpl impl) {
                     sequence = impl.collatzSequenceString(n); 
                 } else {
                     sequence = Integer.toString(n);
                 }
+                // Adds the formatted pair to the list
                 formattedPairs.add(n + ":" + sequence);
             }
         }
         
+        // Writes the formatted pairs to the output location
         String outputLoc = request.getOutputLocation();
         dataStorageApi.writeOutputs(outputLoc, formattedPairs);
 

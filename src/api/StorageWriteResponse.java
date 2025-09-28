@@ -1,6 +1,7 @@
 package api;
 
 public class StorageWriteResponse {
+    
     private final StorageStatusCode code;
 
     public StorageWriteResponse(StorageStatusCode code) {
