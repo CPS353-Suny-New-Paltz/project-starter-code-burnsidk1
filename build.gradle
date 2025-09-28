@@ -24,21 +24,9 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.10.2')
 	testImplementation('org.mockito:mockito-core:5.10.0')
 	implementation('com.google.code.gson:gson:2.13.1')
-	implementation 'fr.inria.gforge.spoon:spoon-core:11.2.0'
+	implementation ('fr.inria.gforge.spoon:spoon-core:11.2.0')
 }
 
 test {
-    useJUnitPlatform()
-
-    filter {
-        excludeTestsMatching "tests.ComputeEngineIntegrationTest.integration_1_10_25_writes_factors_defaultDelimiters"
-        excludeTestsMatching "tests.TestDataStorageAPI.readInputs_returnsBatch_for_1_10_25"
-        excludeTestsMatching "tests.TestDataStorageAPI.writeOutputs_returnsResult"
-		excludeTestsMatching "tests.TestComputeEngineAPI.startCompute_nominal_returnsResponse"
-        excludeTestsMatching "tests.TestComputeEngineAPI.completeCompute_nominal_returnsResponse"
-        excludeTestsMatching "tests.TestDataStorageAPI.writeResults_wrapper_returnsResponse"
-        excludeTestsMatching "tests.TestUserNetworkAPI.submitJob_withCustomDelimiter_smoke"
-
-        setFailOnNoMatchingTests(false)
-    }
+	useJUnitPlatform()
 }
