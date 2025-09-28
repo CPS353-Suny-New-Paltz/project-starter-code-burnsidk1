@@ -30,30 +30,36 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         if (inputLocation == null) {
             return null;
         }
-        java.util.List<Integer> values = new java.util.ArrayList<>();
-        // Try statement for reading in the values from a file
-        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(inputLocation))) {
-            
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Trim removes any unwanted whitespace
-                line = line.trim();
-                if (!line.isEmpty()) {
-                    try {
-                        // Parses the integers and add to the list
-                        values.add(Integer.parseInt(line));
-                        // If parsing fails, catch the exception
-                    } catch (NumberFormatException e) {
-                        // Skips lines that are not valid
+        if (dataStore != null) {
+            // Read the integers from Datastore
+            java.util.List<Integer> values = dataStore.readIntegers(inputLocation);
+            if (values == null) return null;
+            return new api.InputBatch(values);
+        } else {
+            // If no DataStore is provided, reads from a file directly
+            java.util.List<Integer> values = new java.util.ArrayList<>();
+            // Try statement for reading in the values from a file
+            try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(inputLocation))) {
+                
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    line = line.trim();
+                    if (!line.isEmpty()) {
+                        try {
+                            values.add(Integer.parseInt(line));
+                            // Catches NumberFormatException if the line is not a valid integer
+                        } catch (NumberFormatException exception) {
+                            // Skips lines that are not valid
+                        }
                     }
                 }
+                // Catches IOException if the file cannot be read
+            } catch (java.io.IOException exception) {
+                return null;
             }
-            // Catches IOException if the file cannot be read
-        } catch (java.io.IOException e) {
-            return null;
-        }
         // Returns the list of integers
         return new api.InputBatch(values);
+        }
     }
 
 	// Writes outputs to destination
