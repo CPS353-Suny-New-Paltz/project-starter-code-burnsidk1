@@ -33,7 +33,9 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         if (dataStore != null) {
             // Read the integers from Datastore
             java.util.List<Integer> values = dataStore.readIntegers(inputLocation);
-            if (values == null) return null;
+            if (values == null) {
+                return null;
+            }
             return new api.InputBatch(values);
         } else {
             // If no DataStore is provided, reads from a file directly
