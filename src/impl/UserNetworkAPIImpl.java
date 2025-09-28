@@ -41,7 +41,9 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
         List<String> formattedPairs = new ArrayList<>();
         if (batch != null) {
             for (Integer n : batch.values()) {
-                if (n == null || n <= 0) continue;
+                if (n == null || n <= 0) {
+                	continue;
+                }
 
                 String sequence;
                 if (computeEngineApi instanceof ComputeEngineAPIImpl impl) {
