@@ -30,13 +30,16 @@ public class ComputeEngineIntegrationTest {
 	    ComputeEngineAPI engine = new ComputeEngineAPIImpl();
 	    UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, engine);
 
-	    List<String> expected = Arrays.asList(
-	        "1:1",
-	        "10:1,2,5,10",
-	        "25:1,5,25"
-	    );
+		List<String> expected = Arrays.asList(
+			"1:1",
+			"10:10,5,16,8,4,2,1",
+			"25:25,76,38,19,58,29,88,44,22,11,34,17,52,26,13,40,20,10,5,16,8,4,2,1"
+		);
 
-	    assertEquals(expected, outBuffer,
-	        "Destination should contain default-formatted factors for 1,10,25");
+		// Trigger the computation and output
+		userApi.submitJob(new api.UserJobStartRequest(null, "mem://inputs", "mem://outputs"));
+
+		assertEquals(expected, outBuffer,
+			"Destination should contain default-formatted Collatz sequences for 1,10,25");
 	  }
 	}

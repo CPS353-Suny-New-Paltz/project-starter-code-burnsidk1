@@ -39,14 +39,23 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 	  public WriteResult writeOutputs(String outputLocation, List<String> formattedPairs) {
 	    if (outCfg != null && outCfg.getLocation().equals(outputLocation) && formattedPairs != null) {
 	      outCfg.getDestination().addAll(formattedPairs);
-	    }
-	    return null;
-	  }
+		// If the output location or formatted pairs are null, returns false
+			return new WriteResult(true, "Write successful");
+		}
+		// If not successful, returns false
+		return new WriteResult(false, "Write failed");
+	}
 
 	  @Override
-	  public StorageWriteResponse writeResults(StorageWriteRequest request) {
-		return null;
-	  }
+	public StorageWriteResponse writeResults(StorageWriteRequest request) {
+		if (request != null && request.getDestination() != null && request.getFormattedPairs() != null) {
+			writeOutputs(request.getDestination().getLocation(), request.getFormattedPairs());
+			// If successful, returns SUCCESS
+			return new StorageWriteResponse(api.StorageStatusCode.SUCCESS);
+		}
+		// If not successful, returns INVALID_REQUEST
+		return new StorageWriteResponse(api.StorageStatusCode.INVALID_REQUEST);
+	}
 	  
 	  @Test
 	  void placeholder_smoke() {
