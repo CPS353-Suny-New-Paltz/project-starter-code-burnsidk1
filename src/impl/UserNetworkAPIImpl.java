@@ -40,6 +40,10 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
         String inputLoc = request.getInputLocation();   // Reads the input location
         InputBatch batch = dataStorageApi.readInputs(inputLoc); // Reads the batch of inputs (string)
 
+        // Default delimiter
+        String delim = request.getDelimiter();
+        if (delim == null || delim.isEmpty()) delim = ",";
+
         // Formats the output as a list of strings
         List<String> formattedPairs = new ArrayList<>();
         if (batch != null) {
@@ -49,7 +53,6 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
                     // Skip invalid inputs
                 	continue;
                 }
-
                 String sequence;
                 // Use the ComputeEngineAPIImpl to get the Collatz sequence string
                 if (computeEngineApi instanceof ComputeEngineAPIImpl impl) {
