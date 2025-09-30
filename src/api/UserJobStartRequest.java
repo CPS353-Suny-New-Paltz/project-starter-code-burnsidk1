@@ -1,3 +1,5 @@
+package api;
+
 public class UserJobStartRequest {
 	//default delimiter
 	public String delimiter;
