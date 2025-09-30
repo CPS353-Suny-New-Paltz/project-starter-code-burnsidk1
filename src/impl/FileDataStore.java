@@ -16,19 +16,28 @@ public class FileDataStore implements DataStore {
     @Override
     public List<Integer> readIntegers(String inputLocation) {
         List<Integer> out = new ArrayList<>();
-        if (inputLocation == null || inputLocation.isEmpty()) return out;
+        if (inputLocation == null || inputLocation.isEmpty()) {
+        return out;
+        }
 
         File file = new File(inputLocation);
-        if (!file.exists()) return out;
+        if (!file.exists()) {
+            return out;
+        }
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String s = line.trim();
-                if (s.isEmpty()) continue;
+                if (s.isEmpty()) {
+                continue;
+                }
+
                 try {
                     int n = Integer.parseInt(s);
-                    if (n > 0) out.add(n);
+                    if (n > 0) {
+                     out.add(n);
+                    }
                 } catch (NumberFormatException ignore) {
                     // ignore non-integer lines
                 }
@@ -41,18 +50,24 @@ public class FileDataStore implements DataStore {
 
     @Override
     public boolean writeLines(String outputLocation, List<String> lines) {
-        if (outputLocation == null || outputLocation.isEmpty()) return false;
+        if (outputLocation == null || outputLocation.isEmpty()) { 
+        return false;
+        }
 
         File file = new File(outputLocation);
         File parent = file.getParentFile();
-        if (parent != null) parent.mkdirs();
+        if (parent != null) {
+        parent.mkdirs();
+        }
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
             if (lines != null && !lines.isEmpty()) {
                 for (int i = 0; i < lines.size(); i++) {
                     String s = lines.get(i);
                     bw.write(s == null ? "" : s);
-                    if (i < lines.size() - 1) bw.newLine(); // one file line per list entry
+                    if (i < lines.size() - 1) {
+                     bw.newLine(); // one file line per list entry
+                    }
                 }
             }
             return true;
