@@ -1,43 +1,38 @@
-package api;
-
 public class UserJobStartRequest {
-	// Default delimiter
+	//default delimiter
 	public String delimiter;
-	private final String inputLocation;
-    private final String outputLocation;
+    private final String inputLocation;
+    private final String outputLocation; 
+    
+    // Constructor for default delimiter
+    public UserJobStartRequest() {
+        this(",", null, null);
+    }
+    
+    // Constructor for user delimiter
+    public UserJobStartRequest(String delimiter) {
+        this(delimiter, null, null);
+    }
 
-	public UserJobStartRequest() {
-		this.delimiter = ",";
-		this.inputLocation = null;
-		this.outputLocation = null;
-	}
-
-	// Custom delimiter from user
-	public UserJobStartRequest(String delimiter, String inputLocation) {
-		this.delimiter = delimiter;
-		this.inputLocation = inputLocation;
-		this.outputLocation = null;
-	}
-	
-	// Customer delimiter, outputLocation and/or inputLocation from user
-    public UserJobStartRequest(String delimiter, String inputLocation, String outputLocation) {
+    // Full constructor for delimiter, input location, and output location
+    public UserJobStartRequest(String inputLocation, String outputLocation, String delimiter) {
         this.delimiter = (delimiter == null ? "," : delimiter);
         this.inputLocation = inputLocation;
         this.outputLocation = outputLocation;
     }
-
+    
 	// Getter for user delimiter
 	public String getDelimiter() {
 		return delimiter;
 	}
-	
-	// Getter for user inputLocation
-    public String getInputLocation() {
-        return inputLocation;
-    }
-    
-    // Getter for user inputLocation
-    public String getOutputLocation() { 
-    	return outputLocation; 
-    	}
+
+	// Getter for inputLocation
+	public String getInputLocation() { 
+		return inputLocation; 
+		}
+
+	// Getter for outputLocation
+	public String getOutputLocation() { 
+		return outputLocation; 
+		}
 }
