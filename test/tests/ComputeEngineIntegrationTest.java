@@ -43,7 +43,7 @@ public class ComputeEngineIntegrationTest {
 		);
 
 		// Trigger the computation and output
-		userApi.submitJob(new api.UserJobStartRequest(null, "mem://inputs", "mem://outputs"));
+		userApi.submitJob(new api.UserJobStartRequest("mem://inputs", "mem://outputs", null));
 
 		// Assert the output buffer matches expected results
 		assertEquals(expected, outBuffer,
