@@ -32,7 +32,7 @@ public class ManualTestingFramework {
     	// TODO 2:
         // Run a computation with an input file of <root project dir>/manualTestInput.txt
         // and an output of <root project dir>/manualTestOutput.txt, with a delimiter of ',' 
-    	UserJobStartRequest request = new UserJobStartRequest(",", INPUT, OUTPUT);
+    	UserJobStartRequest request = new UserJobStartRequest(INPUT, OUTPUT, ",");
     	
         UserJobStartResponse response = coordinator.submitJob(request);
 

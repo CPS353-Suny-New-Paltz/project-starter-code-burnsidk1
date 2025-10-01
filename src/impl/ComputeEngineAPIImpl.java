@@ -60,7 +60,7 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
         // For loop to append each number and commas together
         for (int i = 0; i < seq.size(); i++) {
             if (i > 0) {
-                sb.append(',');
+                sb.append('|');
             }
             sb.append(seq.get(i));
         }
