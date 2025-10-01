@@ -71,12 +71,21 @@ public class DataStorageAPIImpl implements DataStorageAPI {
              // If the output location or formatted pairs are null, returns false
             return new api.WriteResult(false, "Output location or formatted pairs is null");
         }
-        // Try statement for writing the values to a file
-        try (java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.FileWriter(outputLocation))) {
-            for (String line : formattedPairs) {
-                writer.write(line);
-                writer.newLine();
+
+            // Make outputs into one line
+            String line = String.join(",", formattedPairs);
+
+            // DataStore write
+            if (dataStore != null) {
+                boolean good = dataStore.writeLines(outputLocation, java.util.List.of(line));
+                return new api.WriteResult(good, good ? "Write successful" : "Write failed");
             }
+        
+        // Try statement for writing the values to a file
+        try (java.io.BufferedWriter writer =
+                new java.io.BufferedWriter(new java.io.FileWriter(outputLocation))) {
+           writer.write(line);
+     
             // Catches IOException if the file cannot be written to
         } catch (java.io.IOException e) {
             return new api.WriteResult(false, "IOException: " + e.getMessage());
