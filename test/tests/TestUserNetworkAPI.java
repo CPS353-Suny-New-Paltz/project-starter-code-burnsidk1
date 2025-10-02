@@ -21,16 +21,18 @@ public class TestUserNetworkAPI {
     	// Creates the mocks needed for the test
         DataStorageAPI storage = Mockito.mock(DataStorageAPI.class);
         ComputeEngineAPI compute = Mockito.mock(ComputeEngineAPI.class);
-        UserNetworkAPI api = new UserNetworkAPIImpl(storage, compute);
+        
+        UserNetworkAPI network = new UserNetworkAPIImpl(storage, compute);
 
         // Makes a request using the custom delimiter
         UserJobStartRequest request = new UserJobStartRequest(null, null, ";");
        
         // Starts
-        UserJobStartResponse response = api.submitJob(request);
+        UserJobStartResponse response = network.submitJob(request);
 
         // Assert
         assertNotNull(response, "Smoke: submitJob returns response");
+        assertEquals(api.NetworkStatusCode.SUCCESS, response.getCode());
     }
 
     @Test
