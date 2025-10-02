@@ -7,15 +7,17 @@ import api.StorageWriteRequest;
 import api.StorageWriteResponse;
 import api.WriteResult;
 import impl.DataStorageAPIImpl;
+import api.StorageStatusCode;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -30,44 +32,66 @@ public class TestDataStorageAPI {
     void readInputs_returnsBatch_for_1_10_25() {
         // Set up mocks for DataStore
         DataStore ds = Mockito.mock(DataStore.class);
-        when(ds.readIntegers(anyString())).thenReturn(INPUTS); // Accepts any location
+        // Mocks the readIntegers method
+        when(ds.readIntegers(anyString())).thenReturn(Collections.emptyList());
+        // Mocks the specific input location
+        when(ds.readIntegers("input file name")).thenReturn(INPUTS); // Accepts any location
+        
         DataStorageAPI api = new DataStorageAPIImpl(ds);
 
         // Takes in the file and integers
         InputBatch batch = api.readInputs("input file name");
 
-        // Assert
+        // Asserts that the InputBatch is not null
         assertNotNull(batch, "Returns an InputBatch");
+        // Asserts that the batch values match the input list
+        assertEquals(INPUTS, batch.values(), "Batch should contain 1,10,25");
+        
     }
 
     @Test
-    void writeOutputs_returnsResult() {
+    void readInputs_returnsExactIntegers() {
         // Set up mocks for DataStore
         DataStore ds = Mockito.mock(DataStore.class);
         when(ds.writeLines(eq("output file name"), any())).thenReturn(true);
+        // Creates the DataStorageAPI with the mocked DataStore
         DataStorageAPI api = new DataStorageAPIImpl(ds);
+        
+        // Input list of strings
+        List<String> inputs = Arrays.asList("1", "10", "25");
 
-        // Dummy values for the input test 1, 10, 25
-        List<String> formatted = Arrays.asList("1", "10", "25");
+        // Writes the outputs to the specified file
+        WriteResult result = api.writeOutputs("output file name", inputs);
 
-        // Start
-        WriteResult result = api.writeOutputs("output file name", formatted);
-
-        // Assert 
-        assertNotNull(result, "Should return a WriteResult");
+        // Asserts that the result is not null
+        assertNotNull(result, "Returns a WriteResult");
+        //  Asserts that the write was successful
+        assertEquals(true, result.success(), "Write should succeed");
     }
 
     @Test
     void writeResults_wrapper_returnsResponse() {
         // Set up mocks for DataStore
         DataStore ds = Mockito.mock(DataStore.class);
-        DataStorageAPI api = new DataStorageAPIImpl(ds);
+        // Mocks the writeLines method
+        when(ds.writeLines(eq("output file name"), any())).thenReturn(true);
+
+        // DataStorageAPI with the mocked DataStore
+        DataStorageAPI storage = new DataStorageAPIImpl(ds);
+        api.OutputConfig dest = Mockito.mock(api.OutputConfig.class);
+        when(dest.getLocation()).thenReturn("output file name");
+        
+        // Storage write request mock
         StorageWriteRequest request = Mockito.mock(StorageWriteRequest.class);
+        when(request.getDestination()).thenReturn(dest);
+        when(request.getFormattedPairs()).thenReturn(Arrays.asList("1", "10", "25"));
 
         // Write response
-        StorageWriteResponse response = api.writeResults(request);
+        StorageWriteResponse response = storage.writeResults(request);
 
-        // Assert
-        assertNotNull(response, "Should return a response");
+        // Asserts thet the response is not null
+        assertNotNull(response, "Returns a response");
+        // Asserts that the response code is SUCCESS
+        assertEquals(api.StorageStatusCode.SUCCESS, response.getCode(), "Should be SUCCESS");
     }
 }
