@@ -16,16 +16,16 @@ public class FileDataStore implements DataStore {
     @Override
     // Reads integers from a file location
     public List<Integer> readIntegers(String inputLocation) {
-        List<Integer> out = new ArrayList<>();
+        List<Integer> outputLines = new ArrayList<>();
         // If the input location is null or empty, returns an empty list
         if (inputLocation == null || inputLocation.isEmpty()) {
-        return out;
+        return outputLines;
         }
 
         // Reads the file line by line
         File file = new File(inputLocation);
         if (!file.exists()) {
-            return out;
+            return outputLines;
         }
 
         // Try to check if the file can be read
@@ -41,7 +41,7 @@ public class FileDataStore implements DataStore {
                 try {
                     int n = Integer.parseInt(s);
                     if (n > 0) {
-                     out.add(n);
+                     outputLines.add(n);
                     }
                 } catch (NumberFormatException ignore) {
                     // Ignore non integer lines
@@ -50,7 +50,7 @@ public class FileDataStore implements DataStore {
         } catch (IOException ignore) {
             // Fail soft for the checkpoint
         }
-        return out;
+        return outputLines;
     }
 
     @Override
