@@ -77,8 +77,9 @@ public class DataStorageAPIImpl implements DataStorageAPI {
 
             // DataStore write
             if (dataStore != null) {
-                boolean good = dataStore.writeLines(outputLocation, java.util.List.of(line));
-                return new api.WriteResult(good, good ? "Write successful" : "Write failed");
+                // The success boolean means the write was successful
+                boolean success = dataStore.writeLines(outputLocation, java.util.List.of(line));
+                return new api.WriteResult(success, success ? "Write successful" : "Write failed");
             }
         
         // Try statement for writing the values to a file
