@@ -5,6 +5,7 @@ import api.ComputeCompleteResponse;
 import api.ComputeEngineAPI;
 import api.ComputeStartRequest;
 import api.ComputeStartResponse;
+import api.ComputeStatusCode;
 import impl.ComputeEngineAPIImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,25 +19,27 @@ public class TestComputeEngineAPI {
 	 @Test
 	 void startCompute_nominal_returnsResponse() {
 	     // No mocks needed
-	     ComputeEngineAPI api = new ComputeEngineAPIImpl();
+	     ComputeEngineAPI engine = new ComputeEngineAPIImpl();
 	     ComputeStartRequest request = new ComputeStartRequest();
 
 	     // Starts
-	     ComputeStartResponse response = api.startCompute(request);
+	     ComputeStartResponse response = engine.startCompute(request);
 	     
 	     // Asserts
 	     assertNotNull(response, "Return a response for input");
+	     assertEquals(ComputeStatusCode.SUCCESS, response.getCode());
 	 }
 
 	 @Test
 	 void completeCompute_nominal_returnsResponse() {
-	     ComputeEngineAPI api = new ComputeEngineAPIImpl();
+	     ComputeEngineAPI engine = new ComputeEngineAPIImpl();
 	     ComputeCompleteRequest request = new ComputeCompleteRequest();
 
 	     // Starts
-	     ComputeCompleteResponse response = api.completeCompute(request);
+	     ComputeCompleteResponse response = engine.completeCompute(request);
 
 	     // Asserts
 	     assertNotNull(response, "ComputeComplete should return a response");
+	     assertEquals(ComputeStatusCode.SUCCESS, response.getCode());
 	 }
 }
