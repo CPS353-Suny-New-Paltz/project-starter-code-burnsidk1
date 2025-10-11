@@ -53,9 +53,12 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
 
      // Comma separated string for the output
     public String collatzSequenceString(int initialNum) {
+        // Verifies that the input is a positive integer
+        if (initialNum <= 0) {
+            throw new IllegalArgumentException("Collatz input must be a positive integer.");
+        }
         // Gets the sequence as a list of integers
-            List<Integer> seq = collatzSequence(initialNum);
-            // Builds the string
+        List<Integer> seq = collatzSequence(initialNum);
         StringBuilder sb = new StringBuilder(seq.size() * 2);
         // For loop to append each number and commas together
         for (int i = 0; i < seq.size(); i++) {
