@@ -9,4 +9,7 @@ public interface ComputeEngineAPI {
 	
 	// Complete the computation 
 	ComputeCompleteResponse completeCompute(ComputeCompleteRequest request);
+
+	// Collatz sequence as a string
+	String collatzSequenceString(int n);
 }
