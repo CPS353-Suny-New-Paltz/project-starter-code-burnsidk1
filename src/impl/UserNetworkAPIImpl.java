@@ -13,18 +13,19 @@ import api.UserNetworkAPI;
 
 public class UserNetworkAPIImpl implements UserNetworkAPI {
 
+    // No validation needed, any values are valid
     private final DataStorageAPI dataStorageApi;   // Used to read inputs and write outputs
     private final ComputeEngineAPI computeEngineApi; // Used to run the computation
 
     public UserNetworkAPIImpl() {
-        // No argument constructor for the smoke test
+        // No argument constructor for the smoke test, no validation needed
         this.dataStorageApi = null;
         this.computeEngineApi = null;
     }
     
     // Dependencies
     public UserNetworkAPIImpl(DataStorageAPI dataStorageApi, ComputeEngineAPI computeEngineApi) {
-        // Storage and Compute dependencies
+        // Storage and Compute dependencies, no validation needed, any values are valid
         this.dataStorageApi = dataStorageApi;
         this.computeEngineApi = computeEngineApi;
     }
