@@ -13,6 +13,7 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
 
     @Override
     public ComputeStartResponse startCompute(ComputeStartRequest request) {
+        // Validation that request is not null
         if (request == null) {
             // If anything is wrong with the start request, returns invalid request
             return new ComputeStartResponse(api.ComputeStatusCode.INVALID_REQUEST);
@@ -23,6 +24,7 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
 
     @Override
     public ComputeCompleteResponse completeCompute(ComputeCompleteRequest request) {
+        // Validation that request is not null
         if (request == null) {
             // If anything is wrong with the complete request, returns invalid request
             return new ComputeCompleteResponse(api.ComputeStatusCode.INVALID_REQUEST);
@@ -32,6 +34,7 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
     }
 	
     public List<Integer> collatzSequence(int initialNum) {
+        // InitialNum validation, must be positive
             if (initialNum <= 0) {
             throw new IllegalArgumentException("Collatz input must be a positive integer.");
         }
