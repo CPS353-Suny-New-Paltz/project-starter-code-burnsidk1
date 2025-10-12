@@ -56,14 +56,9 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
                     // Skip invalid inputs
                 	continue;
                 }
-                String sequence;
-                // Use the ComputeEngineAPIImpl to get the Collatz sequence string
-                if (computeEngineApi instanceof ComputeEngineAPIImpl impl) {
-                    sequence = impl.collatzSequenceString(n); 
-                } else {
-                    sequence = Integer.toString(n);
-                }
-                // Adds the formatted pair to the list
+
+                // Uses the ComputeEngineAPI to get the Collatz sequence string
+                String sequence = computeEngineApi.collatzSequenceString(n);
                 formattedPairs.add(n + ":" + sequence);
             }
         }
