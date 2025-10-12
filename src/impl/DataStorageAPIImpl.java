@@ -20,14 +20,15 @@ public class DataStorageAPIImpl implements DataStorageAPI {
 
     // Storage dependency
     public DataStorageAPIImpl(DataStore dataStore) {
+        // No validation needed for DataStore, all values are valid
         this.dataStore = dataStore;
     }
 
     // Read integers from a user-defined location
 	@Override
     public InputBatch readInputs(String inputLocation) {
-        // If the input location is null, returns null
-        if (inputLocation == null) {
+        // Validate input location and if the input location is null, returns null
+        if (inputLocation == null || inputLocation.trim().isEmpty()) {
             return null;
         }
         if (dataStore != null) {
@@ -67,9 +68,12 @@ public class DataStorageAPIImpl implements DataStorageAPI {
 	// Writes outputs to destination
     @Override
     public WriteResult writeOutputs(String outputLocation, List<String> formattedPairs) {
-        if (outputLocation == null || formattedPairs == null) {
-             // If the output location or formatted pairs are null, returns false
+    // If the output location or formatted pairs are null, returns false
+        if (outputLocation == null || outputLocation.trim().isEmpty()) {
             return new api.WriteResult(false, "Output location or formatted pairs is null");
+        }
+        if (formattedPairs == null || formattedPairs.isEmpty()) {
+            return new api.WriteResult(false, "Formatted pairs is null");
         }
 
             // Make outputs into one line
@@ -98,14 +102,18 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     // Wrapper for the request/response
     @Override
     public StorageWriteResponse writeResults(StorageWriteRequest request) {
+        // If the request is null, returns INVALID_REQUEST
         if (request == null) {
-            // If the request is null, returns INVALID_REQUEST
             return new api.StorageWriteResponse(api.StorageStatusCode.INVALID_REQUEST);
         }
+
         // Writes the outputs using the request data
         String outputLocation = null;
         if (request.getDestination() != null) {
             outputLocation = request.getDestination().getLocation();
+        }
+        if (outputLocation == null || outputLocation.trim().isEmpty()) {
+            return new api.StorageWriteResponse(api.StorageStatusCode.INVALID_REQUEST);
         }
         api.WriteResult result = writeOutputs(outputLocation, request.getFormattedPairs());
         if (result != null && result.success()) {
