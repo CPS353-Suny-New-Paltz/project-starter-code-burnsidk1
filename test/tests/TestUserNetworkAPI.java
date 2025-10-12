@@ -24,14 +24,14 @@ public class TestUserNetworkAPI {
         
         UserNetworkAPI network = new UserNetworkAPIImpl(storage, compute);
 
-        // Makes a request using the custom delimiter
-        UserJobStartRequest request = new UserJobStartRequest(null, null, ";");
+    // Makes a request using the custom delimiter
+    UserJobStartRequest request = new UserJobStartRequest("input.txt", "output.txt", ";");
        
         // Starts
         UserJobStartResponse response = network.submitJob(request);
 
         // Assert
-        assertNotNull(response, "Smoke: submitJob returns response");
+        assertNotNull(response, "Smoke: submitJob returns a response");
         assertEquals(api.NetworkStatusCode.SUCCESS, response.getCode());
     }
 
