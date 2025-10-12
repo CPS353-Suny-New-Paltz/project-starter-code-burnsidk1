@@ -54,9 +54,8 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
             for (Integer n : batch.values()) {
                 if (n == null || n <= 0) {
                     // Skip invalid inputs
-                	continue;
+                    continue;
                 }
-
                 // Uses the ComputeEngineAPI to get the Collatz sequence string
                 String sequence = computeEngineApi.collatzSequenceString(n);
                 formattedPairs.add(n + ":" + sequence);
