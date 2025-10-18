@@ -28,7 +28,7 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
 
     @Override
     public ComputeCompleteResponse completeCompute(ComputeCompleteRequest request) {
-        try{ // Validation that request is not null
+        try { // Validation that request is not null
         if (request == null) {
             // If anything is wrong with the complete request, returns invalid request
             return new ComputeCompleteResponse(api.ComputeStatusCode.INVALID_REQUEST);
