@@ -6,7 +6,7 @@ public enum NetworkStatusCode {
     // The user request was not valid
     INVALID_REQUEST(false),
     // Something is wrong with the network
-    UNAVAILABLE(false);
+    NETWORK_UNAVAILABLE(false);
 
     private final boolean success;
 
