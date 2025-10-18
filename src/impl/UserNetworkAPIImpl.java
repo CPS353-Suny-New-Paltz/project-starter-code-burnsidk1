@@ -33,10 +33,11 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
     @Override
     // Returns a response with a status code
     public UserJobStartResponse submitJob(UserJobStartRequest request) {
-        // If anything is wrong with the request, returns invalid request
-        if (request == null || dataStorageApi == null || computeEngineApi == null) {
-            return new UserJobStartResponse(api.NetworkStatusCode.INVALID_REQUEST);
-        }
+        try {
+            // If anything is wrong with the request, returns invalid request
+            if (request == null || dataStorageApi == null || computeEngineApi == null) {
+                return new UserJobStartResponse(api.NetworkStatusCode.INVALID_REQUEST);
+            }
 
         // Validate input location
         String inputLoc = request.getInputLocation(); // Reads the input location
@@ -72,5 +73,9 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
 
             // If everything went well, returns success
             return new UserJobStartResponse(api.NetworkStatusCode.SUCCESS);
+        } catch (Exception e) {
+            // Catch and return an error response
+            return new UserJobStartResponse(api.NetworkStatusCode.NETWORK_UNAVAILABLE);
+        }
     }
 }

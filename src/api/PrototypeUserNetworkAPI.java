@@ -15,7 +15,7 @@ public class PrototypeUserNetworkAPI {
             // Job can successfully start
         } else if (response.getCode() == NetworkStatusCode.INVALID_REQUEST) {
             // User did not enter valid information
-        } else if (response.getCode() == NetworkStatusCode.UNAVAILABLE) {
+        } else if (response.getCode() == NetworkStatusCode.NETWORK_UNAVAILABLE) {
             // For some reason the network is not available
         } else {
             // Any other future status errors
