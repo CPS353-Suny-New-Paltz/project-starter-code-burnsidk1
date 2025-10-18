@@ -83,7 +83,7 @@ public class FileDataStore implements DataStore {
             }
             return true;
             // Catches IOException if the file cannot be written to
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
     }
