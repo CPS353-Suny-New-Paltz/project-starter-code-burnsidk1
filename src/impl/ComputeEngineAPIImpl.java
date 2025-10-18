@@ -86,4 +86,6 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
     } catch (Exception e) {
         // Catch and return an empty string
         return "";
+    }
+  }
 }
