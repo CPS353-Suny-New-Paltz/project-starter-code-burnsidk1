@@ -27,6 +27,7 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     // Read integers from a user-defined location
 	@Override
     public InputBatch readInputs(String inputLocation) {
+        try {
         // Validate input location and if the input location is null, returns null
         if (inputLocation == null || inputLocation.trim().isEmpty()) {
             return null;
@@ -61,13 +62,19 @@ public class DataStorageAPIImpl implements DataStorageAPI {
                 return null;
             }
         // Returns the list of integers
-        return new api.InputBatch(values);
-        }
+        return new api.InputBatch(values); 
+        
+     } 
+        } catch (Exception e) {
+            // Catch and return a null
+            return null;
     }
+ }
 
 	// Writes outputs to destination
     @Override
     public WriteResult writeOutputs(String outputLocation, List<String> formattedPairs) {
+        try {
     // If the output location or formatted pairs are null, returns false
         if (outputLocation == null || outputLocation.trim().isEmpty()) {
             return new api.WriteResult(false, "Output location or formatted pairs is null");
@@ -97,11 +104,17 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         }
         // If successful, returns true
         return new api.WriteResult(true, "Write successful");
+
+        } catch (Exception e) {
+            // Catch all exceptions and return a failed WriteResult
+            return new api.WriteResult(false, "Exception: " + e.getMessage());
+        }
     }
 
     // Wrapper for the request/response
     @Override
     public StorageWriteResponse writeResults(StorageWriteRequest request) {
+        try {
         // If the request is null, returns INVALID_REQUEST
         if (request == null) {
             return new api.StorageWriteResponse(api.StorageStatusCode.INVALID_REQUEST);
@@ -121,6 +134,11 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             return new api.StorageWriteResponse(api.StorageStatusCode.SUCCESS);
         } else {
             // If result is null or unsuccessful, returns STORAGE_UNAVAILABLE
+            return new api.StorageWriteResponse(api.StorageStatusCode.STORAGE_UNAVAILABLE);
+        }
+
+    } catch (Exception e) {
+            // Catches exceptions and returns unavailable status
             return new api.StorageWriteResponse(api.StorageStatusCode.STORAGE_UNAVAILABLE);
         }
     }
