@@ -73,8 +73,11 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
 
             // If everything went well, returns success
             return new UserJobStartResponse(api.NetworkStatusCode.SUCCESS);
-        } catch (Exception e) {
-            // Catch and return an error response
+        } catch (IllegalArgumentException e) {
+            // Catch bad inputs and return an invalid request
+            return new UserJobStartResponse(api.NetworkStatusCode.INVALID_REQUEST);
+        } catch (RuntimeException e) {
+            // Catch runtime issues and return an network unavailable response
             return new UserJobStartResponse(api.NetworkStatusCode.NETWORK_UNAVAILABLE);
         }
     }

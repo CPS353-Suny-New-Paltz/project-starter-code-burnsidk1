@@ -63,12 +63,11 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             }
         // Returns the list of integers
         return new api.InputBatch(values); 
-        
-     } 
-        } catch (Exception e) {
-            // Catch and return a null
+        }
+        } catch (RuntimeException e) {
+            // Catches runtime issues and return null
             return null;
-    }
+        }
  }
 
 	// Writes outputs to destination
@@ -105,9 +104,9 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         // If successful, returns true
         return new api.WriteResult(true, "Write successful");
 
-        } catch (Exception e) {
-            // Catch all exceptions and return a failed WriteResult
-            return new api.WriteResult(false, "Exception: " + e.getMessage());
+        } catch (RuntimeException e) {
+            // Catches all runtime exceptions and return a failed WriteResult
+            return new api.WriteResult(false, "RuntimeException: " + e.getMessage());
         }
     }
 
@@ -137,8 +136,11 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             return new api.StorageWriteResponse(api.StorageStatusCode.STORAGE_UNAVAILABLE);
         }
 
-    } catch (Exception e) {
-            // Catches exceptions and returns unavailable status
+    } catch (IllegalArgumentException e) {
+            // Catch exceptions and returns unavailable status
+            return new api.StorageWriteResponse(api.StorageStatusCode.INVALID_REQUEST);
+        } catch (RuntimeException e) {
+            // Catch all other runtime issues and returns unavailable status
             return new api.StorageWriteResponse(api.StorageStatusCode.STORAGE_UNAVAILABLE);
         }
     }

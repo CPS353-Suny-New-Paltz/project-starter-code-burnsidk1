@@ -20,8 +20,11 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
         }
         // Returns success for now unless the request is null
         return new ComputeStartResponse(api.ComputeStatusCode.SUCCESS);
-    } catch (Exception e) {
-            // Catch and return an error response
+    } catch (IllegalArgumentException e) {
+            // Catch and return an error response for illegal inputs
+            return new ComputeStartResponse(api.ComputeStatusCode.INVALID_REQUEST);
+        } catch (RuntimeException e) {
+            // Catch runtime errors and return a failed code
             return new ComputeStartResponse(api.ComputeStatusCode.COMPUTE_FAILED);
         }
     }
@@ -35,8 +38,12 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
         }
         // Returns success for now unless the request is null
         return new ComputeCompleteResponse(api.ComputeStatusCode.SUCCESS);
-    } catch (Exception e) {
-            // Catch and return an error response
+
+    } catch (IllegalArgumentException e) {
+            // Catch and return an error response for illegal inputs
+            return new ComputeCompleteResponse(api.ComputeStatusCode.INVALID_REQUEST);
+        } catch (RuntimeException e) {
+            // Catch runtime errors and return a failed code
             return new ComputeCompleteResponse(api.ComputeStatusCode.COMPUTE_FAILED);
         }
     }
@@ -61,8 +68,11 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
             sequence.add((int) n);
         }
         return sequence;
-    }  catch (Exception e) {
-            // Catch and return a sentinel value (empty list)
+    }  catch (IllegalArgumentException e) {
+            // Catch bad arguments and return an empty list
+            return new ArrayList<>();
+        } catch (RuntimeException e) {
+            // Catch runtime errors and return an empty list
             return new ArrayList<>();
         }
     }
@@ -83,9 +93,13 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
             sb.append(seq.get(i));
         }
         return sb.toString();
-    } catch (Exception e) {
-        // Catch and return an empty string
+
+    } catch (IllegalArgumentException e) {
+            // Catch bad arguments and return an empty string
         return "";
-    }
+    } catch (RuntimeException e) {
+            // Catch runtime errors and return an empty string
+            return "";
+        }
   }
 }
