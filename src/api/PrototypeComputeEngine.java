@@ -11,12 +11,5 @@ public class PrototypeComputeEngine {
 		
 		// Gets a start response when trying to begin a computation
 	ComputeStartResponse startResponse = engine.startCompute(startRequest); 
-	
-	if (startResponse.getCode() == ComputeStatusCode.SUCCESS) {
-		// The computation was able to start successfully 
-		} else { 
-			// Handle errors (invalid request, unavailable, etc.
-			// that will be added later) 
-			} 
 	} 
 }
