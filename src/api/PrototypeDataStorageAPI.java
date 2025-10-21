@@ -21,15 +21,5 @@ public class PrototypeDataStorageAPI {
         StorageWriteRequest request = new StorageWriteRequest(destination, formattedPairs);
         // Response
         StorageWriteResponse response = api.writeResults(request);
-
-        if (response.getCode() == StorageStatusCode.SUCCESS) {
-            // Results stored
-        } else if (response.getCode() == StorageStatusCode.INVALID_REQUEST) {
-            // Destination input is invalid
-        } else if (response.getCode() == StorageStatusCode.STORAGE_UNAVAILABLE) {
-            // Storage currently unavailable
-        } else {
-            // Future status codes
-        }
     }
 }
