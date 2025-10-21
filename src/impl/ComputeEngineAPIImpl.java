@@ -5,6 +5,7 @@ import java.util.List;
 
 import api.ComputeCompleteRequest;
 import api.ComputeCompleteResponse;
+import api.ComputeStatusCode;
 import api.ComputeEngineAPI;
 import api.ComputeStartRequest;
 import api.ComputeStartResponse;
@@ -16,16 +17,16 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
         try { // Validation that request is not null
         if (request == null) {
             // If anything is wrong with the start request, returns invalid request
-            return new ComputeStartResponse(api.ComputeStatusCode.INVALID_REQUEST);
+            return new ComputeStartResponse(ComputeStatusCode.INVALID_REQUEST);
         }
         // Returns success for now unless the request is null
-        return new ComputeStartResponse(api.ComputeStatusCode.SUCCESS);
+        return new ComputeStartResponse(ComputeStatusCode.SUCCESS);
     } catch (IllegalArgumentException e) {
             // Catch and return an error response for illegal inputs
-            return new ComputeStartResponse(api.ComputeStatusCode.INVALID_REQUEST);
+            return new ComputeStartResponse(ComputeStatusCode.INVALID_REQUEST);
         } catch (RuntimeException e) {
             // Catch runtime errors and return a failed code
-            return new ComputeStartResponse(api.ComputeStatusCode.COMPUTE_FAILED);
+            return new ComputeStartResponse(ComputeStatusCode.COMPUTE_FAILED);
         }
     }
 
@@ -34,17 +35,17 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
         try { // Validation that request is not null
         if (request == null) {
             // If anything is wrong with the complete request, returns invalid request
-            return new ComputeCompleteResponse(api.ComputeStatusCode.INVALID_REQUEST);
+            return new ComputeCompleteResponse(ComputeStatusCode.INVALID_REQUEST);
         }
         // Returns success for now unless the request is null
-        return new ComputeCompleteResponse(api.ComputeStatusCode.SUCCESS);
+        return new ComputeCompleteResponse(ComputeStatusCode.SUCCESS);
 
     } catch (IllegalArgumentException e) {
             // Catch and return an error response for illegal inputs
-            return new ComputeCompleteResponse(api.ComputeStatusCode.INVALID_REQUEST);
+            return new ComputeCompleteResponse(ComputeStatusCode.INVALID_REQUEST);
         } catch (RuntimeException e) {
             // Catch runtime errors and return a failed code
-            return new ComputeCompleteResponse(api.ComputeStatusCode.COMPUTE_FAILED);
+            return new ComputeCompleteResponse(ComputeStatusCode.COMPUTE_FAILED);
         }
     }
 	

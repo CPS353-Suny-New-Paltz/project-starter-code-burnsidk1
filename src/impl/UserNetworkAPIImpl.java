@@ -7,6 +7,7 @@ import api.ComputeEngineAPI;
 //Import all of the APIs made in Checkpoint 2
 import api.DataStorageAPI;
 import api.InputBatch;
+import api.NetworkStatusCode;
 import api.UserJobStartRequest;
 import api.UserJobStartResponse;
 import api.UserNetworkAPI;
@@ -36,14 +37,14 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
         try {
             // If anything is wrong with the request, returns invalid request
             if (request == null || dataStorageApi == null || computeEngineApi == null) {
-                return new UserJobStartResponse(api.NetworkStatusCode.INVALID_REQUEST);
+                return new UserJobStartResponse(NetworkStatusCode.INVALID_REQUEST);
             }
 
         // Validate input location
         String inputLoc = request.getInputLocation(); // Reads the input location
         // If the input location is null or empty, returns INVALID_REQUEST
         if (inputLoc == null || inputLoc.trim().isEmpty()) {
-            return new UserJobStartResponse(api.NetworkStatusCode.INVALID_REQUEST);
+            return new UserJobStartResponse(NetworkStatusCode.INVALID_REQUEST);
         }
 
         InputBatch batch = dataStorageApi.readInputs(inputLoc); // Reads the batch of inputs (string)
@@ -66,19 +67,19 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
         // Writes the formatted pairs to the output location
         String outputLoc = request.getOutputLocation();
         if (outputLoc == null || outputLoc.trim().isEmpty()) {
-            return new UserJobStartResponse(api.NetworkStatusCode.INVALID_REQUEST);
+            return new UserJobStartResponse(NetworkStatusCode.INVALID_REQUEST);
         }
 
         dataStorageApi.writeOutputs(outputLoc, formattedPairs);
 
             // If everything went well, returns success
-            return new UserJobStartResponse(api.NetworkStatusCode.SUCCESS);
+            return new UserJobStartResponse(NetworkStatusCode.SUCCESS);
         } catch (IllegalArgumentException e) {
             // Catch bad inputs and return an invalid request
-            return new UserJobStartResponse(api.NetworkStatusCode.INVALID_REQUEST);
+            return new UserJobStartResponse(NetworkStatusCode.INVALID_REQUEST);
         } catch (RuntimeException e) {
             // Catch runtime issues and return an network unavailable response
-            return new UserJobStartResponse(api.NetworkStatusCode.NETWORK_UNAVAILABLE);
+            return new UserJobStartResponse(NetworkStatusCode.NETWORK_UNAVAILABLE);
         }
     }
 }
