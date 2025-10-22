@@ -6,6 +6,7 @@ import api.DataStorageAPI;
 import api.DataStore;
 import api.InputBatch;
 import api.OutputConfig;
+import api.StorageStatusCode;
 import api.StorageWriteRequest;
 import api.StorageWriteResponse;
 import api.WriteResult;
@@ -27,6 +28,7 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     // Read integers from a user-defined location
 	@Override
     public InputBatch readInputs(String inputLocation) {
+        try {
         // Validate input location and if the input location is null, returns null
         if (inputLocation == null || inputLocation.trim().isEmpty()) {
             return null;
@@ -37,7 +39,7 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             if (values == null) {
                 return null;
             }
-            return new api.InputBatch(values);
+            return new InputBatch(values);
         } else {
             // If no DataStore is provided, reads from a file directly
             java.util.List<Integer> values = new java.util.ArrayList<>();
@@ -61,19 +63,24 @@ public class DataStorageAPIImpl implements DataStorageAPI {
                 return null;
             }
         // Returns the list of integers
-        return new api.InputBatch(values);
+        return new InputBatch(values); 
         }
-    }
+        } catch (RuntimeException e) {
+            // Catches runtime issues and return null
+            return null;
+        }
+ }
 
 	// Writes outputs to destination
     @Override
     public WriteResult writeOutputs(String outputLocation, List<String> formattedPairs) {
+        try {
     // If the output location or formatted pairs are null, returns false
         if (outputLocation == null || outputLocation.trim().isEmpty()) {
-            return new api.WriteResult(false, "Output location or formatted pairs is null");
+            return new WriteResult(false, "Output location or formatted pairs is null");
         }
         if (formattedPairs == null || formattedPairs.isEmpty()) {
-            return new api.WriteResult(false, "Formatted pairs is null");
+            return new WriteResult(false, "Formatted pairs is null");
         }
 
             // Make outputs into one line
@@ -83,7 +90,7 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             if (dataStore != null) {
                 // The success boolean means the write was successful
                 boolean success = dataStore.writeLines(outputLocation, java.util.List.of(line));
-                return new api.WriteResult(success, success ? "Write successful" : "Write failed");
+                return new WriteResult(success, success ? "Write successful" : "Write failed");
             }
         
         // Try statement for writing the values to a file
@@ -93,18 +100,24 @@ public class DataStorageAPIImpl implements DataStorageAPI {
      
             // Catches IOException if the file cannot be written to
         } catch (java.io.IOException e) {
-            return new api.WriteResult(false, "IOException: " + e.getMessage());
+            return new WriteResult(false, "IOException: " + e.getMessage());
         }
         // If successful, returns true
-        return new api.WriteResult(true, "Write successful");
+        return new WriteResult(true, "Write successful");
+
+        } catch (RuntimeException e) {
+            // Catches all runtime exceptions and return a failed WriteResult
+            return new WriteResult(false, "RuntimeException: " + e.getMessage());
+        }
     }
 
     // Wrapper for the request/response
     @Override
     public StorageWriteResponse writeResults(StorageWriteRequest request) {
+        try {
         // If the request is null, returns INVALID_REQUEST
         if (request == null) {
-            return new api.StorageWriteResponse(api.StorageStatusCode.INVALID_REQUEST);
+            return new StorageWriteResponse(StorageStatusCode.INVALID_REQUEST);
         }
 
         // Writes the outputs using the request data
@@ -113,15 +126,23 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             outputLocation = request.getDestination().getLocation();
         }
         if (outputLocation == null || outputLocation.trim().isEmpty()) {
-            return new api.StorageWriteResponse(api.StorageStatusCode.INVALID_REQUEST);
+            return new StorageWriteResponse(StorageStatusCode.INVALID_REQUEST);
         }
-        api.WriteResult result = writeOutputs(outputLocation, request.getFormattedPairs());
+        WriteResult result = writeOutputs(outputLocation, request.getFormattedPairs());
         if (result != null && result.success()) {
             // If result is not null and successful, returns SUCCESS
-            return new api.StorageWriteResponse(api.StorageStatusCode.SUCCESS);
+            return new StorageWriteResponse(StorageStatusCode.SUCCESS);
         } else {
             // If result is null or unsuccessful, returns STORAGE_UNAVAILABLE
-            return new api.StorageWriteResponse(api.StorageStatusCode.STORAGE_UNAVAILABLE);
+            return new StorageWriteResponse(StorageStatusCode.STORAGE_UNAVAILABLE);
+        }
+
+    } catch (IllegalArgumentException e) {
+            // Catch exceptions and returns unavailable status
+            return new StorageWriteResponse(StorageStatusCode.INVALID_REQUEST);
+        } catch (RuntimeException e) {
+            // Catch all other runtime issues and returns unavailable status
+            return new StorageWriteResponse(StorageStatusCode.STORAGE_UNAVAILABLE);
         }
     }
 }
