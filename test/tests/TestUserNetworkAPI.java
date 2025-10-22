@@ -33,7 +33,7 @@ public class TestUserNetworkAPI {
 
         // Assert
         assertNotNull(response, "Smoke: submitJob returns a response");
-        assertEquals(api.NetworkStatusCode.SUCCESS, response.getCode());
+        assertEquals(NetworkStatusCode.SUCCESS, response.getCode());
     }
 
     @Test
@@ -58,5 +58,21 @@ public class TestUserNetworkAPI {
         assertNotNull(response, "Response should not be null");
         // Asserts that the status code is INVALID_REQUEST
         assertEquals(NetworkStatusCode.INVALID_REQUEST, response.getCode(), "Should return INVALID_REQUEST for null input");
+    }
+    @Test
+    void submitJob_BadInputLocation_returnsInvalidRequest() {
+        // Mocks for dependencies
+        DataStorageAPI storage = Mockito.mock(DataStorageAPI.class);
+        ComputeEngineAPI compute = Mockito.mock(ComputeEngineAPI.class);
+        // Pass mocks into UserNetworkAPIImpl
+        UserNetworkAPI network = new UserNetworkAPIImpl(storage, compute);
+
+        // Pass request with empty input location
+        UserJobStartRequest request = new UserJobStartRequest("   ", "output.txt", ",");
+        UserJobStartResponse response = network.submitJob(request);
+        // Asserts that the response is not null
+        assertNotNull(response, "Response should not be null");
+        // Asserts that the status code is INVALID_REQUEST
+        assertEquals(NetworkStatusCode.INVALID_REQUEST, response.getCode(), "Should return INVALID_REQUEST for bad input location");
     }
 }
