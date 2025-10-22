@@ -13,6 +13,7 @@ import api.UserJobStartRequest;
 import api.UserJobStartResponse;
 import api.UserNetworkAPI;
 import impl.UserNetworkAPIImpl;
+import api.NetworkStatusCode;
 
 public class TestUserNetworkAPI {
 	
@@ -41,5 +42,21 @@ public class TestUserNetworkAPI {
         
         // Assert for the delimiter
         assertEquals(",", request.getDelimiter());
+    }
+    
+    @Test
+    void submitJob_NullRequest_returnsInvalidRequest() {
+        // Mocks for dependencies
+        DataStorageAPI storage = Mockito.mock(DataStorageAPI.class);
+        ComputeEngineAPI compute = Mockito.mock(ComputeEngineAPI.class);
+        // Pass mocks into UserNetworkAPIImpl
+        UserNetworkAPI network = new UserNetworkAPIImpl(storage, compute);
+
+        // Pass null request to check validation
+        UserJobStartResponse response = network.submitJob(null);
+        // Asserts that the response is not null
+        assertNotNull(response, "Response should not be null");
+        // Asserts that the status code is INVALID_REQUEST
+        assertEquals(NetworkStatusCode.INVALID_REQUEST, response.getCode(), "Should return INVALID_REQUEST for null input");
     }
 }
