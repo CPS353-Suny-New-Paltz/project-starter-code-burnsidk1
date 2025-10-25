@@ -1,6 +1,10 @@
 package testHarness;
 
 import API_Package.MultithreadedNetworkAPI;
+import api.UserNetworkAPI;
+import impl.UserNetworkAPIImpl;
+import impl.DataStorageAPIImpl;
+import impl.ComputeEngineAPIImpl;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +22,7 @@ public class TestMultiUser {
 	
 	// TODO 1: change the type of this variable to the name you're using for your @NetworkAPI
 	// interface
-	private ComputationCoordinator coordinator;
+	private UserNetworkAPI coordinator;
 	private MultithreadedNetworkAPI networkAPI;
 	
 	@BeforeEach
@@ -27,6 +31,7 @@ public class TestMultiUser {
 		//TODO 2: create an instance of the implementation of your @NetworkAPI; this is the component
 		// that the user will make requests to
 		// Store it in the 'coordinator' instance variable
+		coordinator = new UserNetworkAPIImpl(new DataStorageAPIImpl(), new ComputeEngineAPIImpl());
 	}
 	public void cleanup() {
         if (networkAPI != null) {
