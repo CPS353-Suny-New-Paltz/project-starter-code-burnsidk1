@@ -1,4 +1,4 @@
-package testHarness;
+package project.checkpointtests;
 
 import java.io.File;
 import api.UserNetworkAPI;
