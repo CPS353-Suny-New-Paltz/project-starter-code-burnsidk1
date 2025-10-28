@@ -2,7 +2,7 @@ package project.checkpointtests;
 
 // import API_Package.MultithreadedNetworkAPI;
 import api.UserNetworkAPI;
-import impl.UserNetworkAPIImpl;
+import impl.MultithreadedUserNetworkAPI;
 import impl.DataStorageAPIImpl;
 import impl.ComputeEngineAPIImpl;
 import java.io.File;
@@ -32,7 +32,7 @@ public class TestMultiUser {
 		//TODO 2: create an instance of the implementation of your @NetworkAPI; this is the component
 		// that the user will make requests to
 		// Store it in the 'coordinator' instance variable
-		coordinator = new UserNetworkAPIImpl(new DataStorageAPIImpl(), new ComputeEngineAPIImpl());
+	coordinator = new MultithreadedUserNetworkAPI(new DataStorageAPIImpl(), new ComputeEngineAPIImpl());
 	}
 	// public void cleanup() { COMMENTED OUT
     //     if (networkAPI != null) {
