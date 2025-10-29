@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 // Created class extending AbstractUserNetworkAPI for Multithreaded implementation
-public class MultithreadedUserNetworkAPI extends AbstractUserNetworkAPI implements UserNetworkAPI {
+public class MultithreadedUserNetworkAPI extends AbstractUserNetworkAPI {
     // Set up thread pool
     private final ExecutorService executor;
     private static final int maxThreads = 8; // max thread size of 8
