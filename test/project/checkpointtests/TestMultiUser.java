@@ -1,6 +1,6 @@
 package project.checkpointtests;
 
-// import API_Package.MultithreadedNetworkAPI;
+import impl.MultithreadedUserNetworkAPI;
 import api.UserNetworkAPI;
 import impl.UserNetworkAPIImpl;
 import impl.DataStorageAPIImpl;
@@ -24,21 +24,21 @@ public class TestMultiUser {
 	// TODO 1: change the type of this variable to the name you're using for your @NetworkAPI
 	// interface
 	private UserNetworkAPI coordinator;
-	// private MultithreadedNetworkAPI networkAPI; COMMENTED OUT
+	private MultithreadedUserNetworkAPI networkAPI;
 	
 	@BeforeEach
 	public void initializeComputeEngine() {
-		// networkAPI = new MultithreadedNetworkAPI(); COMMENTED OUT
+		networkAPI = new MultithreadedUserNetworkAPI();
 		//TODO 2: create an instance of the implementation of your @NetworkAPI; this is the component
 		// that the user will make requests to
 		// Store it in the 'coordinator' instance variable
 		coordinator = new UserNetworkAPIImpl(new DataStorageAPIImpl(), new ComputeEngineAPIImpl());
 	}
-	// public void cleanup() { COMMENTED OUT
-    //     if (networkAPI != null) {
-    //         networkAPI.shutdown();
-    //     }
-    // }
+	public void cleanup() {
+        if (networkAPI != null) {
+            networkAPI.shutdown();
+        }
+    }
 	@Test
 	public void compareMultiAndSingleThreaded() throws Exception {
 		int numThreads = 4;
@@ -93,10 +93,10 @@ public class TestMultiUser {
 		}
 		return result;
 	}
-	// @Test COMMENTED OUT
-    // public void smokeTest() {
-    //     List<String> requests = List.of("test1", "test2", "test3");
-    //     List<String> results = networkAPI.processRequests(requests);
-    //     assertEquals(requests.size(), results.size());
-    // }
+	@Test
+    public void smokeTest() {
+        List<String> requests = List.of("test1", "test2", "test3");
+        List<String> results = networkAPI.processRequests(requests);
+        assertEquals(requests.size(), results.size());
+    }
 }
