@@ -1,7 +1,7 @@
 package project.checkpointtests;
 
 import java.io.File;
-import api.UserNetworkAPI;
+import impl.MultithreadedUserNetworkAPI;
 import api.UserJobStartRequest;
 import api.UserJobStartResponse;
 
@@ -10,9 +10,9 @@ public class TestUser {
 	
 	// TODO 3: change the type of this variable to the name you're using for your
 	// @NetworkAPI interface; also update the parameter passed to the constructor
-	private final UserNetworkAPI coordinator;
+	private final MultithreadedUserNetworkAPI coordinator;
 
-	public TestUser(UserNetworkAPI coordinator) {
+	public TestUser(MultithreadedUserNetworkAPI coordinator) {
 		this.coordinator = coordinator;
 	}
 
