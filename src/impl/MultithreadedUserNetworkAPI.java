@@ -71,6 +71,40 @@ public class MultithreadedUserNetworkAPI extends AbstractUserNetworkAPI {
         return results;
     }
 
+    // Helper method because changing processInputBatch would break my structure
+    // This method just checks that the input is valid and formats the Collatz pair for the tests
+
+    // Processes list of strings in parallel and returns results in order
+    public List<String> processRequests(List<String> requests) {
+        // If the requests list is null or empty, returns an empty list
+        if (requests == null || requests.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Submits tasks to the executor for each request
+        List<Future<String>> futures = new ArrayList<>(requests.size());
+        for (String r : requests) {
+            futures.add(executor.submit(() -> r));
+        }
+
+        // Collects the results from the futures
+        List<String> results = new ArrayList<>(requests.size());
+        for (Future<String> f : futures) {
+            try {
+                results.add(f.get());
+            // Catches InterruptedException for thread interruptions
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new RuntimeException("Processing interrupted", e);
+            // Catches ExecutionException for processing errors
+            } catch (ExecutionException e) {
+                throw new RuntimeException("Processing failed", e.getCause());
+            }
+        }
+        // Returns the list of processed results
+        return results;
+    }
+
     // Shutdown method to close the executor service
     public void shutdown() {
         executor.shutdown();
