@@ -19,6 +19,12 @@ public class MultithreadedUserNetworkAPI extends AbstractUserNetworkAPI {
     private final ExecutorService executor;
     private static final int maxThreads = 8; // max thread size of 8
 
+    // No-arg constructor
+    public MultithreadedUserNetworkAPI() {
+        super();
+        this.executor = Executors.newFixedThreadPool(maxThreads);
+    }
+
     public MultithreadedUserNetworkAPI(DataStorageAPI dataStorageApi, ComputeEngineAPI computeEngineApi) {
         super(dataStorageApi, computeEngineApi);
         // Initialize the thread pool
@@ -63,5 +69,10 @@ public class MultithreadedUserNetworkAPI extends AbstractUserNetworkAPI {
         }
         // Returns the list of formatted results
         return results;
+    }
+
+    // Shutdown method to close the executor service
+    public void shutdown() {
+        executor.shutdown();
     }
 }
