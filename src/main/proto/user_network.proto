@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc";
+option java_outer_classname = "UserNetworkProto";
+
+package usernetwork;
+
+service UserNetworkService {
+  rpc SubmitJob (JobRequest) returns (JobResponse);
+}
+
+message JobRequest {
+  string input_location = 1;
+  string output_location = 2;
+  string delimiter = 3;
+}
+
+message JobResponse {
+  StatusCode status_code = 1;
+  string error_message = 2;
+}
+
+enum StatusCode {
+  SUCCESS = 0;
+  INVALID_REQUEST = 1;
+  NETWORK_UNAVAILABLE = 2;
+}
