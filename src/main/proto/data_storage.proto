@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.storage";
+option java_outer_classname = "DataStorageProto";
+
+package datastorage;
+
+service DataStorageService {
+  rpc ReadInputs (ReadInputsRequest) returns (ReadInputsResponse);
+  rpc WriteOutputs (WriteOutputsRequest) returns (WriteOutputsResponse);
+}
+
+message ReadInputsRequest {
+  string input_location = 1;
+}
+
+message ReadInputsResponse {
+  repeated int32 values = 1;
+}
+
+message WriteOutputsRequest {
+  string output_location = 1;
+  repeated string formatted_pairs = 2;
+}
+
+message WriteOutputsResponse {
+  bool success = 1;
+  string message = 2;
+}
