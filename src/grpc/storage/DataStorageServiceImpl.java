@@ -23,7 +23,9 @@ public class DataStorageServiceImpl extends DataStorageServiceImplBase {
         ReadInputsResponse.Builder builder = ReadInputsResponse.newBuilder();
         if (batch != null && batch.values() != null) {
             for (Integer value : batch.values()) {
-                if (value != null) builder.addValues(value);
+                if (value != null) {
+                    builder.addValues(value);
+                }
             }
         }
         responseObserver.onNext(builder.build());
