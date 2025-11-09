@@ -57,6 +57,7 @@ public class UserNetworkClient {
             .usePlaintext()
             .build();
 
+    try {
         // Create blocking stub for making calls
         UserNetworkServiceGrpc.UserNetworkServiceBlockingStub stub =
             UserNetworkServiceGrpc.newBlockingStub(channel);
@@ -73,8 +74,12 @@ public class UserNetworkClient {
 
         // Print the status code from the response
         System.out.println("Status: " + response.getStatusCode());
-
+        } catch (Exception e) {
+            System.err.println("Error communicating with server: " + e.getMessage());
+            System.exit(1);
+        } finally {
         // Shutdown the gRPC channel
         channel.shutdown();
+        }
     }
 }

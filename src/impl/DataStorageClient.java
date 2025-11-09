@@ -35,7 +35,12 @@ public class DataStorageClient implements DataStorageAPI {
 
     // Shutdown the gRPC channel
     public void shutdown() {
+        try {
         channel.shutdown();
+        } catch (Exception e) {
+            // Cleanup code
+            System.err.println("Error shutting down DataStorage channel: " + e.getMessage());
+        }
     }
 
     // Read inputs from the gRPC server
@@ -45,6 +50,7 @@ public class DataStorageClient implements DataStorageAPI {
         if (inputLocation == null || inputLocation.trim().isEmpty()) {
             return null;
         }
+        try {
         // Make gRPC call to readInputs
         ReadInputsResponse resp = stub.readInputs(ReadInputsRequest.newBuilder()
                 .setInputLocation(inputLocation)
@@ -53,6 +59,11 @@ public class DataStorageClient implements DataStorageAPI {
         values.addAll(resp.getValuesList());
         // Returns the InputBatch with the retrieved values
         return new InputBatch(values);
+        } catch (Exception e) {
+        // Return null on gRPC error
+        System.err.println("gRPC error in readInputs: " + e.getMessage());
+        return null;
+        }
     }
 
     // Write outputs to the gRPC server
@@ -62,6 +73,7 @@ public class DataStorageClient implements DataStorageAPI {
         if (outputLocation == null || outputLocation.trim().isEmpty() || formattedPairs == null || formattedPairs.isEmpty()) {
             return new WriteResult(false, "Invalid arguments");
         }
+        try {
         // Make gRPC call to writeOutputs
         WriteOutputsResponse resp = stub.writeOutputs(WriteOutputsRequest.newBuilder()
                 .setOutputLocation(outputLocation)
@@ -69,6 +81,10 @@ public class DataStorageClient implements DataStorageAPI {
                 .build());
         // Returns the WriteResult based on the response
         return new WriteResult(resp.getSuccess(), resp.getMessage());
+        } catch (Exception e) {
+            // Return failure
+            return new WriteResult(false, "gRPC error: " + e.getMessage());
+        }
     }
 
     // Handles write requests
