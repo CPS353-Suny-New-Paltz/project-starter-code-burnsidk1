@@ -60,9 +60,8 @@ public class DataStorageClient implements DataStorageAPI {
         // Returns the InputBatch with the retrieved values
         return new InputBatch(values);
         } catch (Exception e) {
-        // Return null on gRPC error
-        System.err.println("gRPC error in readInputs: " + e.getMessage());
-        return null;
+        // Return error on gRPC error
+        throw new RuntimeException("Failed to read inputs from storage server: " + e.getMessage(), e);
         }
     }
 
