@@ -27,6 +27,23 @@ public class UserNetworkServer {
 
         // Print server start message
         System.out.println("Server started on port 50051");
+        
+        // Add shutdown
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Shutting down UserNetworkServer.");
+            try {
+                server.shutdown();
+            } catch (Exception e) {
+                System.err.println("Error shutting down server: " + e.getMessage());
+            }
+            try {
+                storage.shutdown();
+            } catch (Exception e) {
+                System.err.println("Error shutting down storage client: " + e.getMessage());
+            }
+            System.out.println("UserNetworkServer stopped.");
+        }));
+        
         // Keep the server running until termination
         server.awaitTermination();
     }

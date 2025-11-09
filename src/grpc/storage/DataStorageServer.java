@@ -20,7 +20,11 @@ public class DataStorageServer {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("DataStorageServer shutting down.");
             // Shutdown the gRPC server
+        try {
             server.shutdown();
+            } catch (Exception e) {
+                System.err.println("Error shutting down server: " + e.getMessage());
+            }
             System.out.println("DataStorageServer stopped.");
         }));
         // Keep the server running until termination
