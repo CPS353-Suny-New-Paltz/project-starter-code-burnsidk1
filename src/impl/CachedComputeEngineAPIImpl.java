@@ -12,6 +12,16 @@ import api.ComputeEngineAPI;
 import api.ComputeStartRequest;
 import api.ComputeStartResponse;
 
+// Steps:
+// 1. Checked for common causes of bottlenecks such as loops, file systems, networking calls and caching 
+// 2. Identified that repeated calls to collatzSequenceString with the same input would cause recomputation
+// 3. Created a CachedComputeEngineAPIImpl that uses a ConcurrentHashMap to cache results of collatzSequenceString
+// 4. Made a timing benchmark to compare performance of cached vs non-cached implementations
+// 5. Identified that there was infact a significant bottleneck at the collatzSequenceString method due to recomputation
+// 6. Benchmarking results showed a minimum of 85% improvement with caching for repeated inputs
+
+// Sample run: Baseline total: 81 ms, Cached total: 8 ms, Improvement: 90.12345679012346%
+
 public class CachedComputeEngineAPIImpl implements ComputeEngineAPI {
 
     // Cache Collatz sequence string representation
