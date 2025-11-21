@@ -17,7 +17,7 @@ public class CacheBenchmark {
                 compute.collatzSequenceString(n); // Measure baseline
             }
         }
-        long BaselineTimeMs = System.currentTimeMillis() - baselineStart; // Elapsed time
+        long baselineTimeMs = System.currentTimeMillis() - baselineStart; // Elapsed time
 
         // Already built cache - not cleared and has entries from baseline run
         long builtStart = System.currentTimeMillis();
@@ -28,8 +28,8 @@ public class CacheBenchmark {
         }
         long builtTimeMs = System.currentTimeMillis() - builtStart;
 
-        double improvementPercent = ((BaselineTimeMs - builtTimeMs) / (double) BaselineTimeMs) * 100.0;
+        double improvementPercent = ((baselineTimeMs - builtTimeMs) / (double) baselineTimeMs) * 100.0;
         
-        System.out.println("Baseline total: " + BaselineTimeMs + " ms, Cached total: " + builtTimeMs + " ms, Improvement: " + improvementPercent + "%");
+        System.out.println("Baseline total: " + baselineTimeMs + " ms, Cached total: " + builtTimeMs + " ms, Improvement: " + improvementPercent + "%");
     }
 }
