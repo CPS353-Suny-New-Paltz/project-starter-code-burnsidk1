@@ -117,9 +117,9 @@ public class CachedComputeEngineAPIImpl implements ComputeEngineAPI {
             sequenceStringCache.put(initialNum, built);
             return built;
         } catch (IllegalArgumentException e) {
-            return "";
+            return "Bad Argument";
         } catch (RuntimeException e) {
-            return "";
+            return "Runtime error";
         }
     }
 
