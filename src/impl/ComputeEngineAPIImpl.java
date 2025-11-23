@@ -97,10 +97,10 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
 
     } catch (IllegalArgumentException e) {
             // Catch bad arguments and return an empty string
-        return "";
+        return "Bad Argument";
     } catch (RuntimeException e) {
             // Catch runtime errors and return an empty string
-            return "";
+            return "Runtime error";
         }
   }
 }
