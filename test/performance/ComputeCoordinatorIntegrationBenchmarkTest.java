@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ComputeCoordinatorIntegrationBenchmarkTest {
     @Test
@@ -19,7 +20,7 @@ public class ComputeCoordinatorIntegrationBenchmarkTest {
         int start = 1;
         int end = 2000;
         int repetitions = 20;
-        java.util.List<Integer> values = new java.util.ArrayList<>();
+        List<Integer> values = new ArrayList<>();
 
         // Populate input values from start to end
         for (int i = start; i <= end; i++) {
