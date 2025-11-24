@@ -87,7 +87,7 @@ public class UserNetworkClient {
                 for (String part : parts) {
                     lines.add(part.trim());
                 }
-                Path tempFile = Files.createTempFile("collatzInput", ".tmp");
+                Path tempFile = Files.createTempFile("collatzInput", ".temp");
                 Files.write(tempFile, lines);
                 inputLocation = tempFile.toAbsolutePath().toString();
                 tempFile.toFile().deleteOnExit();
