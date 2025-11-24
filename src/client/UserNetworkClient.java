@@ -6,6 +6,11 @@ import grpc.UserNetworkServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class UserNetworkClient {
 
@@ -62,6 +67,36 @@ public class UserNetworkClient {
         UserNetworkServiceGrpc.UserNetworkServiceBlockingStub stub =
             UserNetworkServiceGrpc.newBlockingStub(channel);
 
+        // Create temp file if needed
+        boolean isNumbers = false;
+        try {
+            String[] parts = inputLocation.split(",");
+            for (String part : parts) {
+                Integer.parseInt(part.trim());
+            }
+            isNumbers = true;
+        } catch (NumberFormatException e) {
+            isNumbers = false;
+        }
+        
+        if (isNumbers) {
+            try {
+                // Parse the numbers and write to temp file
+                String[] parts = inputLocation.split(",");
+                List<String> lines = new ArrayList<>();
+                for (String part : parts) {
+                    lines.add(part.trim());
+                }
+                Path tempFile = Files.createTempFile("collatzInput", ".tmp");
+                Files.write(tempFile, lines);
+                inputLocation = tempFile.toAbsolutePath().toString();
+                tempFile.toFile().deleteOnExit();
+            } catch (IOException e) {
+                System.err.println("Failed to create temp input file: " + e.getMessage());
+                System.exit(1);
+            }
+        }
+        
         // Build the job request
         JobRequest request = JobRequest.newBuilder()
             .setInputLocation(inputLocation)
