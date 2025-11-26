@@ -64,7 +64,7 @@ public class ComputeEngineIntegrationTest {
 		// Return the batch when readInputs is called
 		Mockito.when(storage.readInputs(Mockito.anyString())).thenReturn(batch);
 		// Make collatzSequenceString throw an exception
-		Mockito.when(compute.collatzSequenceString(Mockito.anyInt())).thenThrow(new RuntimeException("fail"));
+		Mockito.when(compute.collatzSequenceString(Mockito.anyLong())).thenThrow(new RuntimeException("fail"));
 
 		// UserNetworkAPI with mocked dependencies
 		UserNetworkAPI userApi = new UserNetworkAPIImpl(storage, compute);
