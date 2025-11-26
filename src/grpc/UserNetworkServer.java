@@ -1,7 +1,7 @@
 package grpc;
 
 import api.UserNetworkAPI;
-import impl.ComputeEngineAPIImpl;
+import impl.CachedComputeEngineAPIImpl;
 import impl.DataStorageClient;
 import impl.UserNetworkAPIImpl;
 import io.grpc.Server;
@@ -15,7 +15,7 @@ public class UserNetworkServer {
     // Main method to start the server
     public static void main(String[] args) throws IOException, InterruptedException {
     DataStorageClient storage = new DataStorageClient("localhost", 50052);
-        ComputeEngineAPIImpl compute = new ComputeEngineAPIImpl();
+        CachedComputeEngineAPIImpl compute = new CachedComputeEngineAPIImpl();
         // Create the UserNetworkAPI implementation using storage and compute components
         UserNetworkAPI api = new UserNetworkAPIImpl(storage, compute);
 
