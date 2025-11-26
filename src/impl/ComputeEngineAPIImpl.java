@@ -49,15 +49,15 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
         }
     }
 	
-    public List<Integer> collatzSequence(int initialNum) {
+    public List<Long> collatzSequence(long initialNum) {
         try {
         // InitialNum validation, must be positive
             if (initialNum <= 0) {
             throw new IllegalArgumentException("Collatz input must be a positive integer.");
         }
-        List<Integer> sequence = new ArrayList<>();
-            long n = initialNum; // Long to avoid overflow
-        sequence.add((int) n);
+        List<Long> sequence = new ArrayList<>();
+            long n = initialNum;
+        sequence.add(n);
 
         while (n != 1) {
             if ((n & 1L) == 0L) {       // Even
@@ -66,7 +66,7 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
                 n = 3L * n + 1L;
             }
             // Add to sequence
-            sequence.add((int) n);
+            sequence.add(n);
         }
         return sequence;
     }  catch (IllegalArgumentException e) {
@@ -79,13 +79,13 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
     }
 
      // Comma separated string for the output
-    public String collatzSequenceString(int initialNum) {
+    public String collatzSequenceString(long initialNum) {
     try {
         // initialNum requires validation: must be a positive integer.
         if (initialNum <= 0) {
             throw new IllegalArgumentException("Collatz input must be a positive integer.");
         }
-        List<Integer> seq = collatzSequence(initialNum);
+        List<Long> seq = collatzSequence(initialNum);
         StringBuilder sb = new StringBuilder(seq.size() * 2);
         for (int i = 0; i < seq.size(); i++) {
             if (i > 0) {

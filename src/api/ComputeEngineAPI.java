@@ -11,5 +11,5 @@ public interface ComputeEngineAPI {
 	ComputeCompleteResponse completeCompute(ComputeCompleteRequest request);
 
 	// Collatz sequence as a string
-	String collatzSequenceString(int n);
+	String collatzSequenceString(long n);
 }
