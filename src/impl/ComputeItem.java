@@ -13,12 +13,12 @@ public class ComputeItem {
         this.result = null;
     }
 
-    // Getter and setter for input value
+    // Getter for input value
     public long getInputValue() {
         return inputValue;
     }
     
-    // Getter and setter for result
+    // Getter for result
     public String getResult() {
         return result;
     }
