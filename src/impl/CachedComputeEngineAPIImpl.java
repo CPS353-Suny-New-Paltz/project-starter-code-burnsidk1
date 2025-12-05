@@ -24,6 +24,9 @@ import api.ComputeStartResponse;
 
 public class CachedComputeEngineAPIImpl implements ComputeEngineAPI {
 
+    // Maximum cache size
+    private static final int maxCacheSize = 10000;
+
     // Cache Collatz sequence string representation
     private final Map<Long, String> sequenceStringCache = new ConcurrentHashMap<>();
 
@@ -115,11 +118,26 @@ public class CachedComputeEngineAPIImpl implements ComputeEngineAPI {
             }
             String built = sb.toString();
             sequenceStringCache.put(initialNum, built);
+            
+            // Check cache size and call evict
+            if (sequenceStringCache.size() > maxCacheSize) {
+                evictOldestEntry();
+            }
+            
             return built;
         } catch (IllegalArgumentException e) {
             return "Bad Argument";
         } catch (RuntimeException e) {
             return "Runtime error";
+        }
+    }
+
+    // Evict the oldest entry when cache exceeds maximum size
+    private void evictOldestEntry() {
+        if (!sequenceStringCache.isEmpty()) {
+            // Remove the first key 
+            Long oldestKey = sequenceStringCache.keySet().iterator().next();
+            sequenceStringCache.remove(oldestKey);
         }
     }
 
