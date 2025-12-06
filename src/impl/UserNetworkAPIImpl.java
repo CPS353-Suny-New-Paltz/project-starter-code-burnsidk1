@@ -49,6 +49,12 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
 
         InputBatch batch = dataStorageApi.readInputs(inputLoc); // Reads the batch of inputs (string)
 
+        // Gets the delimiter from the request
+        String delimiter = request.getDelimiter();
+        if (delimiter == null) {
+            delimiter = ",";
+        }
+
         // Formats the output as a list of strings
         List<String> formattedPairs = new ArrayList<>();
         if (batch != null) {
@@ -64,13 +70,16 @@ public class UserNetworkAPIImpl implements UserNetworkAPI {
             }
         }
         
+        // Joins results with the specified delimiter
+        String joinedOutput = String.join(delimiter, formattedPairs);
+
         // Writes the formatted pairs to the output location
         String outputLoc = request.getOutputLocation();
         if (outputLoc == null || outputLoc.trim().isEmpty()) {
             return new UserJobStartResponse(NetworkStatusCode.INVALID_REQUEST);
         }
 
-        dataStorageApi.writeOutputs(outputLoc, formattedPairs);
+        dataStorageApi.writeOutputs(outputLoc, java.util.List.of(joinedOutput));
 
             // If everything went well, returns success
             return new UserJobStartResponse(NetworkStatusCode.SUCCESS);

@@ -48,11 +48,20 @@ public abstract class AbstractUserNetworkAPI {
 
             InputBatch batch = dataStorageApi.readInputs(inputLoc); // Reads the batch of inputs (string)
 
+            // Gets the delimiter from the request
+            String delimiter = request.getDelimiter();
+            if (delimiter == null) {
+                delimiter = ",";
+            }
+
             // Formats the output as a list of strings
-            List<String> formattedPairs = processInputBatch(batch);
+            List<String> formattedPairs = processInputBatch(batch, delimiter);
             if (formattedPairs == null) {
                 formattedPairs = new ArrayList<>();
             }
+
+            // Joins results with the specified delimiter
+            String joinedOutput = String.join(delimiter, formattedPairs);
 
             // Writes the formatted pairs to the output location
             String outputLoc = request.getOutputLocation();
@@ -60,7 +69,8 @@ public abstract class AbstractUserNetworkAPI {
                 return new UserJobStartResponse(NetworkStatusCode.INVALID_REQUEST);
             }
 
-            dataStorageApi.writeOutputs(outputLoc, formattedPairs);
+            // Pass the output as list to storage
+            dataStorageApi.writeOutputs(outputLoc, java.util.List.of(joinedOutput));
             // If everything went well, returns success
             return new UserJobStartResponse(NetworkStatusCode.SUCCESS);
         } catch (IllegalArgumentException e) {
@@ -83,7 +93,7 @@ public abstract class AbstractUserNetworkAPI {
     }
 
     // Formats the Collatz pair
-    protected String formatCollatzPair(Integer n) {
+    protected String formatCollatzPair(Integer n, String delimiter) {
         if (n == null || n <= 0) {
             return null; // Skip invalid inputs
         }
@@ -93,5 +103,5 @@ public abstract class AbstractUserNetworkAPI {
         return (n + ":" + sequence);
     }
 
-    protected abstract List<String> processInputBatch(InputBatch batch);
+    protected abstract List<String> processInputBatch(InputBatch batch, String delimiter);
 }
