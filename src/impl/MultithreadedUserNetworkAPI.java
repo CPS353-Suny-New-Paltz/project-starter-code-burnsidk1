@@ -37,7 +37,7 @@ public class MultithreadedUserNetworkAPI extends AbstractUserNetworkAPI {
 
     @Override
     // Override processInputBatch to handle the multithreading
-    protected List<String> processInputBatch(InputBatch batch) {
+    protected List<String> processInputBatch(InputBatch batch, String delimiter) {
         // If the batch is null or has no values, return empty results
         if (batch == null || batch.values() == null || batch.values().isEmpty()) {
             return new ArrayList<>();

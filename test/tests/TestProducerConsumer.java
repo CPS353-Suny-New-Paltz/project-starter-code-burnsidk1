@@ -38,13 +38,17 @@ public class TestProducerConsumer {
         // Check if we get success
         Assertions.assertEquals(NetworkStatusCode.SUCCESS, response.getCode());
         // Check that the outputs are as expected
-        Assertions.assertEquals(10, outputBuffer.size()); // Should have 10 outputs
+        Assertions.assertEquals(1, outputBuffer.size()); // Should have 1 output string 
+        
+        // Check that the output is a list of all results
+        String output = outputBuffer.get(0);
+        System.out.println("Producer/Consumer output: " + output);
         
         // Check if the first output is correct: "1:1"
-        Assertions.assertTrue(outputBuffer.get(0).startsWith("1:"));
+        Assertions.assertTrue(output.startsWith("1:"));
         
         // Check that the output for 5 is correct: "5:5|16|8|4|2|1"
-        Assertions.assertEquals("5:5|16|8|4|2|1", outputBuffer.get(4));
+        Assertions.assertEquals("5:5|16|8|4|2|1", results[4]);
         
         // The test passed
         System.out.println("Producer/Consumer test passed");
